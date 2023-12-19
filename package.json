@@ -1,0 +1,43 @@
+{
+  "name": "bigkid",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint && tsc --noEmit",
+    "format": "prettier -w ./"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@portabletext/react": "^3.0.11",
+    "@sanity/overlays": "^2.2.2",
+    "@sanity/preview-url-secret": "^1.3.6",
+    "@sanity/react-loader": "^1.6.3",
+    "@sanity/vision": "^3.21.3",
+    "a11y-react-emoji": "^1.2.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.298.0",
+    "next": "14.0.4",
+    "next-sanity": "^7.0.4",
+    "npm": "^10.2.5",
+    "pluralize": "^8.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-input-slider": "^6.0.1",
+    "react-player": "^2.14.0",
+    "sanity-image": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/node": "20.10.5",
+    "@types/react": "^18.2.45",
+    "autoprefixer": "^10.4.16",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3"
+  }
+}

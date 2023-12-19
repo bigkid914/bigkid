@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html body {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  p:not(:last-child) {
+    margin-bottom: 1em;
+  }
+
+  details > summary {
+    list-style: none;
+  }
+
+  details > summary::marker, 
+  details > summary::-webkit-details-marker  {
+    display: none;
+  }
+}
+
+@layer components {
+  .link {
+    @apply decoration-1 focus:outline-none focus-visible:underline;
+  }
+
+}
