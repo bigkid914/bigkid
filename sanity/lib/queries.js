@@ -15,7 +15,7 @@ export const homePageQuery = groq`
     "sections": sectionOrder[] -> {
       _id,
       title,
-      projects[] {
+      projects[director->slug.current in $filters] {
         _key,
         title,
         "previewVideo": preview.files[quality match "hls"][0].link,
@@ -33,6 +33,19 @@ export const homePageQuery = groq`
     splashscreens[]{
         _key,
         ${imageFragment}
-      }
+    },
+    "directors": *[_type == "director"] | order(name asc) {
+      _id,
+      name,
+      "slug": slug.current
+    }
+  }
+`;
+
+export const directorQuery = groq`
+ *[_type == "director"] | order(name asc) {
+      _id,
+      name,
+      "slug": slug.current
   }
 `;

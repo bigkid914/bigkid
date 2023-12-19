@@ -208,13 +208,12 @@ const FullPlayer = ({ data }) => {
 
     return (
         <article className={"relative col-span-16 col-start-7 pointer-events-none"} >
-            <div className={"absolute w-full -z-10"}>
-                <div className={"w-full border border-black flex items-center justify-center"} style={{ aspectRatio: fullWidth / fullHeight }}>
+            <div className={"absolute w-full pointer-events-auto"}>
+                <div className={"w-full border border-black flex items-center justify-center -z-10"} style={{ aspectRatio: fullWidth / fullHeight }}>
                     <p>loading</p>
                 </div>
-
                 <motion.div
-                    className={"w-full flex items-center gap-5 pointer-events-auto mt-[1em] mb-5"}
+                    className={"w-full flex items-center gap-5 pointer-events-auto mt-[1em] mb-5 z-50"}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -250,8 +249,9 @@ const FullPlayer = ({ data }) => {
                             }
                         }}
                     />
-                </motion.div>
+                    <div className={"leading-none"} >-00:00:00</div>
 
+                </motion.div>
             </div>
             <div className={"relative w-full"} >
                 {isLoaded && <ReactPlayer
@@ -268,11 +268,8 @@ const FullPlayer = ({ data }) => {
                     className={"w-full"}
                 />}
             </div>
-
         </article>
-
     )
-
 }
 
 const formatBytes = (bytes, decimals = 2) => {

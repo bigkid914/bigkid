@@ -1,18 +1,19 @@
-import "server-only"
+import "server-only";
 
-import { draftMode } from "next/headers"
+import { draftMode } from "next/headers";
 
-import { client } from "@/sanity/lib/client"
+import { client } from "@/sanity/lib/client";
 import {
   homePageQuery,
   aboutPageQuery,
   settingsQuery,
   writingPageQuery,
-  curatingPageQuery
-} from "@/sanity/lib/queries"
-import { token } from "@/sanity/lib/token"
+  curatingPageQuery,
+  directorQuery,
+} from "@/sanity/lib/queries";
+import { token } from "@/sanity/lib/token";
 
-import { queryStore } from "./createQueryStore"
+import { queryStore } from "./createQueryStore";
 
 const serverClient = client.withConfig({
   token,
@@ -20,7 +21,7 @@ const serverClient = client.withConfig({
     // Enable stega if it's a Vercel preview deployment, as the Vercel Toolbar has controls that shows overlays
     enabled: process.env.VERCEL_ENV !== "production",
   },
-})
+});
 
 /**
  * Sets the server client for the query store, doing it here ensures that all data fetching in production
@@ -28,26 +29,26 @@ const serverClient = client.withConfig({
  * Live mode in `sanity/presentation` still works, as it uses the `useLiveMode` hook to update `useQuery` instances with
  * live draft content using `postMessage`.
  */
-queryStore.setServerClient(serverClient)
+queryStore.setServerClient(serverClient);
 
-const usingCdn = serverClient.config().useCdn
+const usingCdn = serverClient.config().useCdn;
 // Automatically handle draft mode
-export const loadQuery = ((query, params = {}, options = {}) => {
+export const loadQuery = (query, params = {}, options = {}) => {
   const {
     perspective = draftMode().isEnabled ? "previewDrafts" : "published",
-  } = options
+  } = options;
   // Don't cache by default
-  let cache = "no-store"
+  let cache = "no-store";
   // If `next.tags` is set, and we're not using the CDN, then it's safe to cache
   if (!usingCdn && Array.isArray(options.next?.tags)) {
-    cache = "force-cache"
+    cache = "force-cache";
   }
   return queryStore.loadQuery(query, params, {
     cache,
     ...options,
     perspective,
-  })
-}) 
+  });
+};
 
 /**
  * Loaders that are used in more than one place are declared here, otherwise they're colocated with the component
@@ -58,13 +59,15 @@ export function loadSettings() {
     settingsQuery,
     {},
     { next: { tags: ["settings", "home", "section"] } },
-  )
+  );
 }
 
-export function loadHomePage() {
-  return loadQuery(
-    homePageQuery,
-    {},
-    { next: { tags: ["home", "section", "director"] } },
-  )
+export function loadHomePage(filters) {
+  return loadQuery(homePageQuery, filters, {
+    next: { tags: ["home", "section", "director"] },
+  });
+}
+
+export function loadDirectors() {
+  return loadQuery(directorQuery, {}, { next: { tags: ["director"] } });
 }
