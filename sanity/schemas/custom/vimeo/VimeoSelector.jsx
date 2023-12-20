@@ -44,7 +44,7 @@ export const VimeoSelector = (props) => {
     }, [searchParams]);
 
     return (
-        <div>
+        <div className={"font-sans"}>
             {fieldValue ? <div className={"bg-[#101112] p-4 rounded mb-2"}>
                 <div style={{ aspectRatio: `${fieldValue.width}/${fieldValue.height}` }}>
                     <VideoPlayer url={fieldValue.files.find((file) => file.quality === "hls")?.link} controls={true} playing={false} />

@@ -7,8 +7,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: [
-        ` Times, "Times New Roman", serif, Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular"`,
+      serif: [
+        `Times, "Times New Roman", serif, Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular"`,
       ],
     },
     extend: {

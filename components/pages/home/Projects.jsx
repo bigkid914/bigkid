@@ -66,7 +66,7 @@ const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) 
         <motion.div className={"w-full grid grid-cols-18 h-[2em] overflow-visible gap-x-5"} initial={{ opacity: 1 }}
             animate={(activeVideo === null || isActive) ? { opacity: 1 } : { opacity: 0 }}>
             <div className={"col-span-6"}>
-                <button className={"relative w-max link h-[2em] inline-flex"}
+                <button className={"relative w-max link h-[2em] inline-flex hover:text-theme-blue"}
                     onMouseEnter={handleHoverOn}
                     onMouseLeave={handleHoverOff}
                     onFocus={handleHoverOn}
@@ -171,6 +171,9 @@ const Metadata = ({ children, containerHeight, containerWidth }) => {
             x: "-50%",
         },
     };
+    if (top.current === 0 && left.current === 0) {
+        return
+    }
     return (
         <motion.p
             initial={"initial"}

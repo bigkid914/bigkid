@@ -41,7 +41,7 @@ export const Header = ({ settings, data }) => {
     }, [filters])
 
     return (
-        <header className={"relative w-screen mb-[6em] grid grid-cols-18 gap-5 z-50"}>
+        <header className={"sticky top-0 w-screen mb-[6em] grid grid-cols-18 gap-5 z-50"}>
             <h1 className={"col-span-5 md:col-span-6"}>{globalTitle}</h1>
             <Collapsible title={"about"} className={"col-start-6 md:col-start-12"} >{<PortableText value={about} />}</Collapsible >
             <Collapsible title={"directors"}>
