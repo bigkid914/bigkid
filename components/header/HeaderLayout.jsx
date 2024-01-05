@@ -9,10 +9,8 @@ const createUrl = (pathname, params) => {
     const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
     return `${pathname}${queryString}`;
 };
-
-export const Header = ({ settings, data }) => {
-    const { globalTitle } = settings?.data ?? {};
-    const { about, directors } = data?.data ?? {};
+export default function HeaderLayout(props) {
+    const { globalTitle, about = [], directors = [] } = props?.data ?? {};
     const [filters, setFilters] = useState([]);
     const router = useRouter();
     const pathname = usePathname();
@@ -41,7 +39,7 @@ export const Header = ({ settings, data }) => {
     }, [filters])
 
     return (
-        <header className={"sticky top-0 w-screen mb-[6em] grid grid-cols-18 gap-5 z-50"}>
+        <header className={"sticky top-0 w-screen mb-[6em] grid grid-cols-18 gap-5 z-50 p-4 font-serif font-sm "}>
             <h1 className={"col-span-5 md:col-span-6"}>{globalTitle}</h1>
             <Collapsible title={"about"} className={"col-start-6 md:col-start-12"} >{<PortableText value={about} />}</Collapsible >
             <Collapsible title={"directors"}>
@@ -50,7 +48,8 @@ export const Header = ({ settings, data }) => {
                         {directors.map((director) => {
                             const { _id, name, slug } = director;
                             return (
-                                <li key={_id} className={clsx(filters.includes(slug) || filters.length === 0 ? "opacity-100" : "opacity-30")}>
+                                <li key={_id} className={clsx(filters.includes(slug) || filters.length === 0 ? "opacity-100" : "opacity-30")}
+                                >
                                     <input
                                         type={"checkbox"}
                                         id={slug}

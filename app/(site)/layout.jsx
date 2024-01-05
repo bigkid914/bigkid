@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
-import { loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
-
+import { Suspense } from "react"
+import { Header } from "@/components/header"
 const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
 
 // export async function generateMetadata() {
@@ -34,9 +34,12 @@ export const viewport = {
 export default async function LayoutRoute(props) {
   return (
     <>
-      
-        <main className={"min-h-screen w-screen overflow-x-hidden p-4 font-serif font-sm"}>{props.children}</main>
-      
+      <Suspense>
+        <Header />
+      </Suspense>
+      <main className={"min-h-screen w-screen overflow-x-hidden p-4 font-serif font-sm bg-white"}>
+        {props.children}
+      </main>
       {draftMode().isEnabled && <VisualEditing />}
     </>
   )

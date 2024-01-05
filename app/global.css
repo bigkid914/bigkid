@@ -5,6 +5,7 @@
 @layer base {
   html body {
     -webkit-tap-highlight-color: transparent;
+    background: white;
   }
 
   p:not(:last-child) {

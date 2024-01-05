@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { HomePage } from '@/components/pages/home/HomePage'
-import { loadDirectors, loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
+import {  loadHomePage, loadSettings } from '@/sanity/loader/loadQuery'
 import { notFound } from "next/navigation"
 const HomePagePreview = dynamic(
   () => import('@/components/pages/home/HomePagePreview'),
@@ -16,17 +16,16 @@ export async function generateMetadata() {
 }
 
 export default async function IndexRoute({ searchParams }) {
-  const directors = await loadDirectors();
-  const filters = searchParams?.filters?.split(",") ?? directors.data.map((director => director.slug));
-  const [initial, settings] = await Promise.all([loadHomePage({ filters }), loadSettings()]);
+  const filters = searchParams?.filters?.split(",") || [];
+  const initial = await loadHomePage({ filters });
 
   if (draftMode().isEnabled) {
-    return <HomePagePreview initial={initial} settings={settings} />
+    return <HomePagePreview initial={initial} filters={filters} />
   }
 
   if (!initial.data) {
     return notFound()
   }
 
-  return <HomePage data={initial} settings={settings} />
+  return <HomePage data={initial}  />
 }

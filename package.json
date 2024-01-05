@@ -27,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-input-slider": "^6.0.1",
     "react-player": "^2.14.0",
+    "sanity": "^3.23.4",
     "sanity-image": "^0.1.7"
   },
   "devDependencies": {

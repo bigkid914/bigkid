@@ -39,7 +39,7 @@ const documentIcons = [
 
 const createIcons = [...documentIcons].map((icon) => {
   return {
-    [icon.name]: <Emoji style={{ fontSize: "2em" }} symbol={icon.emoji} label={icon.name} />,
+    [icon.name]: <Emoji style={{ fontSize: "1.5em" }} symbol={icon.emoji} label={icon.name} />,
   };
 });
 

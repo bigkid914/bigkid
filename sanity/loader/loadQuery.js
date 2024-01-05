@@ -10,6 +10,7 @@ import {
   writingPageQuery,
   curatingPageQuery,
   directorQuery,
+  headerQuery,
 } from "@/sanity/lib/queries";
 import { token } from "@/sanity/lib/token";
 
@@ -57,6 +58,14 @@ export const loadQuery = (query, params = {}, options = {}) => {
 export function loadSettings() {
   return loadQuery(
     settingsQuery,
+    {},
+    { next: { tags: ["settings", "home", "section"] } },
+  );
+}
+
+export function loadHeader() {
+  return loadQuery(
+    headerQuery,
     {},
     { next: { tags: ["settings", "home", "section"] } },
   );

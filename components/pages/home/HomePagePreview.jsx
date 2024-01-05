@@ -7,7 +7,7 @@ export default function HomePagePreview(props) {
   const { initial } = props
   const { data, encodeDataAttribute } = useQuery(
     homePageQuery,
-    {},
+    { filters: [] },
     { initial },
   )
 
