@@ -4,29 +4,6 @@ import { Suspense } from "react"
 import { Header } from "@/components/header"
 const VisualEditing = dynamic(() => import('@/sanity/loader/VisualEditing'))
 
-// export async function generateMetadata() {
-//   const [{ data: settings }, { data: homePage }] = await Promise.all([
-//     loadSettings(),
-//     loadHomePage(),
-//   ])
-
-//   const ogImage = urlForOpenGraphImage(settings?.ogImage)
-//   return {
-//     title: homePage?.title
-//       ? {
-//         template: `%s | ${homePage.title}`,
-//         default: homePage.title || 'Personal website',
-//       }
-//       : undefined,
-//     description: homePage?.overview
-//       ? toPlainText(homePage.overview)
-//       : undefined,
-//     openGraph: {
-//       images: ogImage ? [ogImage] : [],
-//     },
-//   }
-// }
-
 export const viewport = {
   themeColor: '#000',
 }
