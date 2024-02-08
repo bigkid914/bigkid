@@ -37,7 +37,7 @@ export default async function LayoutRoute(props) {
       <Suspense>
         <Header />
       </Suspense>
-      <main className={"min-h-screen w-screen overflow-x-hidden p-4 font-serif font-sm bg-white"}>
+      <main className={"min-h-[calc(100vh-170px)] w-screen overflow-x-hidden px-4 pb-4 font-serif font-sm bg-white"}>
         {props.children}
       </main>
       {draftMode().isEnabled && <VisualEditing />}

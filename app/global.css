@@ -23,6 +23,7 @@
 
   video {
     object-fit: contain;
+    object-position: right top;
   }
 }
 

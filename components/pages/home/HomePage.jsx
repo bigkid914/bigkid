@@ -2,10 +2,13 @@
 import { Suspense, useEffect, useState } from "react";
 import { Projects } from './Projects'
 import { Splashscreen } from "@/components/shared/Splashscreen";
+import { useStore } from "@/app/state";
 
 export function HomePage({ data }) {
   const { sections = [] } = data?.data ?? {};
   const [splashscreenVisible, setSplashscreenVisible] = useState(true);
+  const activeVideo = useStore((store) => store.activeVideo)
+  const setActiveVideo = useStore((store) => store.setActiveVideo)
 
   useEffect(() => {
     const hideSplash = () => setSplashscreenVisible(false);
@@ -18,14 +21,14 @@ export function HomePage({ data }) {
       <Suspense>
         <Splashscreen data={data} splashscreenVisible={splashscreenVisible} />
       </Suspense>
-      <div>
+      <div className={"[&>section:not(:first-of-type)>h1]:mt-[2.2em]"}>
         {sections.map((section) => {
           const { _id, projects = [] } = section;
           if (!projects) {
             return null;
           }
           return (
-            <Projects key={_id} data={section} setSplashscreenVisible={setSplashscreenVisible} />
+            <Projects key={_id} data={section} setSplashscreenVisible={setSplashscreenVisible} activeVideo={activeVideo} setActiveVideo={setActiveVideo}/>
           )
         })}
       </div>

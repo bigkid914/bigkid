@@ -6,20 +6,25 @@ import Slider from 'react-input-slider';
 import ReactPlayer from 'react-player/file'
 import clsx from "clsx";
 
-export const Projects = ({ data, setSplashscreenVisible }) => {
+export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveVideo }) => {
     const { title, projects = [] } = data ?? {};
-    const [activeVideo, setActiveVideo] = useState(null)
+    if (projects.length === 0) {
+        return null
+    }
     return (
-        <section className={"flex flex-col"}>
+        <section className={"w-full flex flex-col  lowercase md:w-1/4 [&>div]:mb-2"}>
             <motion.h1
-                className={"font-bold leading-none h-[2em]"}
+                className={"font-bold leading-none mb-3"}
                 initial={{ opacity: 1 }}
                 animate={(activeVideo === null) ? { opacity: 1 } : { opacity: 0 }}
             >
                 {title}
             </motion.h1>
             {projects.map((project) => {
-                const { _key } = project ?? {};
+                const { _key, fullVideo, previewVideo } = project ?? {};
+                if (!fullVideo || !previewVideo) {
+                    return null
+                }
                 return (
                     <Project key={_key} data={project} activeVideo={activeVideo} setActiveVideo={setActiveVideo} setSplashscreenVisible={setSplashscreenVisible} />
                 )
@@ -63,21 +68,25 @@ const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) 
     }
 
     return (
-        <motion.div className={"w-full grid grid-cols-18 h-[2em] overflow-visible gap-x-5"} initial={{ opacity: 1 }}
-            animate={(activeVideo === null || isActive) ? { opacity: 1 } : { opacity: 0 }}>
-            <div className={"col-span-6"}>
-                <button className={"relative w-max link h-[2em] inline-flex hover:text-theme-blue"}
+        <motion.div
+            className={"w-full"}
+            initial={{ opacity: 1 }}
+            animate={(activeVideo === null || isActive) ? { opacity: 1 } : { opacity: 0 }}
+        >
+            <div>
+                <button className={"relative w-max max-w-full leading-none text-left link  inline-flex text-black hover:text-theme-blue"}
                     onMouseEnter={handleHoverOn}
                     onMouseLeave={handleHoverOff}
                     onFocus={handleHoverOn}
                     onBlur={handleHoverOff}
                     onClick={handleClick}
                 >
-                    <h2 className={"h-full flex-start"}>{title}</h2>
+                    <motion.h2 className={"h-full flex-start lowercase"} initial={{ color: "inherit" }}
+                        animate={(isActive) ? { color: "blue" } : { color: "inherit" }}>{title}</motion.h2>
                 </button>
             </div>
-            {!isActive && <PreviewPlayer data={data} previewVisible={previewVisible} />}
-            {isActive && <FullPlayer data={data} />}
+            {!isActive && <div className={"hidden md:flex absolute w-3/4 h-[calc(100vh-8.5rem)] right-4 pl-4 top-[136px] max-w-[90rem] flex-col"}><PreviewPlayer data={data} previewVisible={previewVisible} /></div>}
+            {isActive && <div className={"absolute w-[calc(100%-1rem)] pt-4 pr-4 md:pr-0 md:w-3/4 md:right-4 md:pl-4 md:top-[136px] md:pt-0"}><FullPlayer data={data} previewVisible={previewVisible} /></div>}
         </motion.div>
     )
 }
@@ -123,12 +132,10 @@ const PreviewPlayer = ({ data, previewVisible }) => {
 
     return (
         <>
-            <article className={clsx("relative col-span-16 col-start-7 pointer-events-none", previewVisible ? "visible" : "invisible")}>
-                <div className={"absolute w-full -z-10"}>
-                    <div className={"w-full border border-black flex items-center justify-center"} style={{ aspectRatio: previewWidth / previewHeight }}>
-                        <p>loading</p>
-                    </div>
-                </div>
+            <article className={clsx("relative pointer-events-none max-h-[80%]", previewVisible ? "visible" : "invisible")}>
+                {/* <div className={"absolute w-full z-0"}>
+                    <p>loading</p>
+                </div> */}
                 <VideoPlayer
                     url={previewVideo}
                     width={'100%'}
@@ -138,11 +145,11 @@ const PreviewPlayer = ({ data, previewVisible }) => {
                     muted={true}
                     playsinline
                     loop={true}
-                    className={"w-full"}
+                    className={"w-auto h-full z-10 "}
                 />
             </article>
-            <div className={clsx("absolute w-screen h-screen top-0 left-0 pointer-events-none z-10 p-20 grid grid-cols-18")} >
-                <div className={"relative w-full h-full col-span-16 col-start-4"} ref={metadataContainerRef}>
+            <div className={clsx("w-full flex-1 bottom-0 right-0 pointer-events-none z-10 px-20 py-4")} >
+                <div className={"relative w-full h-full"} ref={metadataContainerRef}>
                     {previewVisible && <div className={"relative w-full h-full"}>
                         <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{new Date(date).toLocaleDateString("en-US", {
                             day: "numeric",
@@ -210,8 +217,8 @@ const FullPlayer = ({ data }) => {
     };
 
     return (
-        <article className={"relative col-span-16 col-start-7 pointer-events-none"} >
-            <div className={"absolute w-full pointer-events-auto"}>
+        <article className={"relative"} >
+            <div className={"relative w-full pointer-events-auto"}>
                 <div className={"w-full border border-black flex items-center justify-center -z-10"} style={{ aspectRatio: fullWidth / fullHeight }}>
                     <p>loading</p>
                 </div>
@@ -253,10 +260,9 @@ const FullPlayer = ({ data }) => {
                         }}
                     />
                     <div className={"leading-none"} >-00:00:00</div>
-
                 </motion.div>
             </div>
-            <div className={"relative w-full"} >
+            <div className={"absolute w-full top-0"} >
                 {isLoaded && <ReactPlayer
                     ref={videoPlayerRef}
                     url={fullVideo}

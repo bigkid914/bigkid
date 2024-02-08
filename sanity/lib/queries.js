@@ -28,7 +28,7 @@ export const homePageQuery = groq`
       _id,
       title,
       count($filters) > 0 => {
-        "projects": projects[director->slug.current in $filters] {
+        "projects": projects[director->slug.current in $filters && defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
           _key,
           title,
           "previewVideo": preview.files[quality match "hls"][0].link,
@@ -43,7 +43,7 @@ export const homePageQuery = groq`
         }
     	},
       count($filters) == 0 => {
-        "projects": projects[] {
+        "projects": projects[defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
           _key,
           title,
           "previewVideo": preview.files[quality match "hls"][0].link,
@@ -63,16 +63,11 @@ export const homePageQuery = groq`
         _key,
         ${imageFragment}
     },
-    "directors": *[_type == "director"] | order(name asc) {
-      _id,
-      name,
-      "slug": slug.current
-    }
   }
 `;
 
 export const directorQuery = groq`
- *[_type == "director"] | order(name asc) {
+ *[_type == "director" && slug.current in *[_type == "section"].projects[].director->slug.current] | order(name asc) {
       _id,
       name,
       "slug": slug.current
