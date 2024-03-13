@@ -87,7 +87,7 @@ export default function HeaderLayout(props) {
 
 const Collapsible = ({ title, children, className }) => {
     return (
-        <details className={clsx("relative  col-span-3 md:h-[1em]", className)}
+        <details className={clsx("relative col-span-3 md:h-[1em] details-popover", className)}
             onClick={(e) => {
                 const details = [...document.querySelectorAll("details")];
                 if (!details.some((f) => f.contains(e.target))) {

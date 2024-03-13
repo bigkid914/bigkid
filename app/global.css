@@ -12,14 +12,31 @@
     margin-bottom: 1em;
   }
 
-  details > summary {
+  .details-popover > summary {
     list-style: none;
   }
 
-  details > summary::marker, 
-  details > summary::-webkit-details-marker  {
+  .details-popover > summary::marker,
+  .details-popover > summary::-webkit-details-marker {
     display: none;
   }
+
+
+  /* summary::after {
+		position: relative;
+    display: inline-block;
+		content: " ►";
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		height: max-content;
+	}
+
+	details[open] summary:after {
+		content: " ▼";
+	} */
+
 
   video {
     object-fit: contain;
@@ -31,5 +48,4 @@
   .link {
     @apply decoration-1 focus:outline-none focus-visible:underline;
   }
-
 }
