@@ -1,17 +1,17 @@
 "use client"
-import { PortableText } from "@portabletext/react";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { useStore } from "@/app/state";
+import { CustomPortableText } from '@/components/shared/CustomPortableText'
 
 const createUrl = (pathname, params) => {
     const paramsString = params.toString();
     const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
     return `${pathname}${queryString}`;
 };
-export default function HeaderLayout(props) {
-    const { globalTitle, about = [], directors = [] } = props?.data ?? {};
+export default function HeaderLayout({data, encodeDataAttribute}) {
+    const { globalTitle, about = [], directors = [] } = data ?? {};
     const [filters, setFilters] = useState([]);
     const router = useRouter();
     const pathname = usePathname();
@@ -41,9 +41,9 @@ export default function HeaderLayout(props) {
     }, [filters])
 
     return (
-        <header className={clsx("sticky top-0 w-screen mb-[5em] grid-cols-18 gap-5 z-50 p-4 font-serif font-sm", "flex flex-col md:grid")}>
+        <header className={clsx("sticky top-0 w-screen mb-[5em] grid-cols-18 gap-5 z-50 p-4 font-serif font-sm", "flex flex-col md:grid")} encodeDataAttribute={encodeDataAttribute}>
             <button className={"col-span-5 md:col-span-6 text-left w-max link"} onClick={() => setActiveVideo(null)}>{globalTitle}</button>
-            <Collapsible title={"about"} className={"col-start-6 md:col-start-12"} >{<PortableText value={about} />}</Collapsible >
+            <Collapsible title={"about"} className={"col-start-6 md:col-start-12"} >{<CustomPortableText value={about} />}</Collapsible >
             <Collapsible title={"directors"}>
                 <form>
                     <ul >

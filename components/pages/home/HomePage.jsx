@@ -4,8 +4,8 @@ import { Projects } from './Projects'
 import { Splashscreen } from "@/components/shared/Splashscreen";
 import { useStore } from "@/app/state";
 
-export function HomePage({ data }) {
-  const { sections = [] } = data?.data ?? {};
+export function HomePage({data}) {
+  const { sections = [] } = data ?? {};
   const [splashscreenVisible, setSplashscreenVisible] = useState(true);
   const activeVideo = useStore((store) => store.activeVideo)
   const setActiveVideo = useStore((store) => store.setActiveVideo)

@@ -13,5 +13,5 @@ export async function Header() {
     return <HeaderPreview initial={initial} />
   }
 
-  return <HeaderLayout data={initial.data} />
+  return <HeaderLayout data={initial} />
 }

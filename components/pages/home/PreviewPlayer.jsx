@@ -69,7 +69,7 @@ export const PreviewPlayer = ({ data, previewVisible }) => {
                             year: "2-digit",
                             month: "numeric",
                         })}</Metadata>
-                        <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{`${fps}fps`}</Metadata>
+                        <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{`${Math.trunc(fps)}fps`}</Metadata>
                         {/* <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{formatBytes(size)}</Metadata> */}
                         <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{formatTime(counter)}</Metadata>
                     </div>}

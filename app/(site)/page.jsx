@@ -27,5 +27,5 @@ export default async function IndexRoute({ searchParams }) {
     return notFound()
   }
 
-  return <HomePage data={initial}  />
+  return <HomePage data={initial.data}  />
 }
