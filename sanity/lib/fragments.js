@@ -5,7 +5,13 @@ export const imageFragment = groq`
     "altText": asset->altText,
     crop,
     hotspot,
-    "preview": asset->metadata.lqip
+    "preview": asset->metadata.lqip,
+    "metadata": asset-> {
+        extension,
+        "dimensions": string(metadata.dimensions.width) + "x" + string(metadata.dimensions.height),
+        size
+    }
+    
 `;
 
 export const linkFragment = groq`

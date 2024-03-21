@@ -1,10 +1,9 @@
 "use client"
 import { PreviewPlayer } from "@/components/pages/home/PreviewPlayer";
 import { FullPlayer } from "@/components/pages/home/FullPlayer";
-
+import { PhotoGallery } from "@/components/pages/home/PhotoGallery";
 import { useState } from "react";
 import { motion } from "framer-motion";
-
 
 export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveVideo }) => {
     const { title, projects = [] } = data ?? {};
@@ -23,8 +22,8 @@ export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveV
                         {title}
                     </motion.h1></summary>
                 {projects.map((project) => {
-                    const { _key, fullVideo, previewVideo } = project ?? {};
-                    if (!fullVideo || !previewVideo) {
+                    const { _key, _type, fullVideo, previewVideo } = project ?? {};
+                    if (_type === "videoObject" && (!fullVideo || !previewVideo)) {
                         return null
                     }
                     return (
@@ -32,16 +31,13 @@ export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveV
                     )
                 })}
             </details>
-
-
-
         </section>
     )
 }
 
 const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) => {
-    const { _key, title } = data ?? {};
-    const [previewVisible, setPreviewVisible] = useState(false)
+    const { _key, _type, title } = data ?? {};
+    const [previewVisible, setPreviewVisible] = useState(false);
 
     const isActive = activeVideo === _key
     const otherIsActive = (activeVideo !== _key && activeVideo !== null)
@@ -91,8 +87,16 @@ const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) 
                     animate={(isActive) ? { color: "blue" } : { color: "inherit" }}>{title}</motion.h2>
             </button>
 
-            {!isActive && <div className={"hidden md:flex absolute w-3/4 h-[calc(100vh-8.5rem)] right-4 pl-4 top-[136px] max-w-[90rem] flex-col"}><PreviewPlayer data={data} previewVisible={previewVisible} /></div>}
-            {isActive && <div className={"absolute w-[calc(100%-1rem)] pt-4 pr-4 md:pr-0 md:w-3/4 md:right-4 md:pl-4 md:top-[136px] md:pt-0"}><FullPlayer data={data} previewVisible={previewVisible} /></div>}
+            {!isActive && (
+                <div className={"hidden md:flex absolute w-3/4 h-[calc(100vh-8.5rem)] right-4 pl-4 top-[136px] max-w-[90rem] flex-col"}>
+                    {_type === "projectObject" ? <PreviewPlayer data={data} previewVisible={previewVisible} />
+                        : <PhotoGallery showAll={false} data={data} previewVisible={previewVisible}/>}
+                </div>)
+            }
+            {isActive && <div className={"absolute w-[calc(100%-1rem)] pt-4 pr-4 md:pr-0 md:w-3/4 md:right-4 md:pl-4 md:top-[136px] md:pt-0"}>
+                {_type === "projectObject" ? <FullPlayer data={data} previewVisible={previewVisible} />
+                    :  <PhotoGallery showAll={true} data={data} previewVisible={previewVisible}/>}
+            </div>}
         </motion.div>
     )
 }

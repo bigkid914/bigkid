@@ -1,10 +1,11 @@
-import { Film } from "lucide-react";
+import { EyeOff, Film } from "lucide-react";
 import React from "react";
 import { defineArrayMember, defineField } from "sanity";
 
 export default defineArrayMember({
   name: "projectObject",
-  title: "Project",
+  title: "Video",
+  icon: <Film strokeWidth={2} size={16} />,
   type: "object",
   fieldsets: [
     {
@@ -48,7 +49,7 @@ export default defineArrayMember({
         media: media?.pictures?.base_link ? (
           <img src={media.pictures.base_link} alt={title} style={{width: "100%", height: "100%", objectFit: "cover"}}/>
         ) : (
-          <Film strokeWidth={1.5} size={25} />
+          <EyeOff strokeWidth={1.5} size={25} />
         ),
         subtitle
       };

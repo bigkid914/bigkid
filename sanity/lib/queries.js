@@ -28,9 +28,10 @@ export const homePageQuery = groq`
       _id,
       title,
       count($filters) > 0 => {
-        "projects": projects[director->slug.current in $filters && defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
+        "projects": projects[director->slug.current in $filters && defined(preview.files[quality match "hls"][0].link) && _type == "photoObject" || defined(fullVideo.files[quality match "hls"][0].link)] {
           _key,
           title,
+          _type,
           "previewVideo": preview.files[quality match "hls"][0].link,
           "fullVideo": fullVideo.files[quality match "hls"][0].link,
           "previewWidth": preview.width,
@@ -39,13 +40,17 @@ export const homePageQuery = groq`
           "fullHeight": fullVideo.height,
           "size": fullVideo.files[] | order(size desc)[0].size,
           "date": fullVideo.release_time,
-          "fps": fullVideo.files[quality match "hls"][0].fps
+          "fps": fullVideo.files[quality match "hls"][0].fps,
+          photos[] {
+            ${imageFragment}
+          }
         }
     	},
       count($filters) == 0 => {
-        "projects": projects[defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
+        "projects": projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
           _key,
           title,
+          _type,
           "previewVideo": preview.files[quality match "hls"][0].link,
           "fullVideo": fullVideo.files[quality match "hls"][0].link,
           "previewWidth": preview.width,
@@ -54,7 +59,10 @@ export const homePageQuery = groq`
           "fullHeight": fullVideo.height,
           "size": fullVideo.files[] | order(size desc)[0].size,
           "date": fullVideo.release_time,
-          "fps": fullVideo.files[quality match "hls"][0].fps
+          "fps": fullVideo.files[quality match "hls"][0].fps,
+          photos[] {
+            ${imageFragment}
+          }
         }
     	},
     },

@@ -13,7 +13,7 @@ export const Splashscreen = ({ data, splashscreenVisible }) => {
     return (
         <div className={"fixed w-screen h-screen top-0 left-0 select-none pointer-events-none z-50 p-5"}>
             {logo.current?._id ? <Image
-                id={logo.current._id}
+                _id={logo.current._id}
                 width={1000}
                 mode={"contain"}
                 alt={"bigkid logo"}

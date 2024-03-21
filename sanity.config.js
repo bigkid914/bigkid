@@ -19,6 +19,8 @@ import director from "@/sanity/schemas/documents/director";
 import linkWithSelector from "@/sanity/schemas/custom/link/linkWithSelector";
 import overview from "@/sanity/schemas/objects/overview";
 import projectObject from "@/sanity/schemas/objects/projectObject";
+import photoObject from "@/sanity/schemas/objects/photoObject";
+
 import vimeoObject from "@/sanity/schemas/objects/vimeoObject";
 
 // Blocks
@@ -31,6 +33,7 @@ const objects = new Set([
   overview,
   projectObject,
   vimeoObject,
+  photoObject
 ]);
 const arrays = new Set([]);
 const blocks = new Set([basicBlock]);
