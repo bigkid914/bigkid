@@ -41,10 +41,10 @@ export default function HeaderLayout({data, encodeDataAttribute}) {
     }, [filters])
 
     return (
-        <header className={clsx("sticky top-0 w-screen mb-[5em] grid-cols-18 gap-5 z-50 p-4 font-serif font-sm", "flex flex-col md:grid")} encodeDataAttribute={encodeDataAttribute}>
+        <header className={clsx("sticky top-0 w-screen mb-[5em] grid-cols-18 gap-5 z-50 p-4 font-serif font-sm", "flex flex-col md:grid")} >
             <button className={"col-span-5 md:col-span-6 text-left w-max link"} onClick={() => setActiveVideo(null)}>{globalTitle}</button>
             <Collapsible title={"about"} className={"col-start-6 md:col-start-12"} >{<CustomPortableText value={about} />}</Collapsible >
-            <Collapsible title={"directors"}>
+            {/* <Collapsible title={"directors"}>
                 <form>
                     <ul >
                         {directors.map((director) => {
@@ -80,7 +80,7 @@ export default function HeaderLayout({data, encodeDataAttribute}) {
                         })}
                     </ul>
                 </form>
-            </Collapsible >
+            </Collapsible > */}
         </header>
     )
 }

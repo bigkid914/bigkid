@@ -4,6 +4,7 @@ import { FullPlayer } from "@/components/pages/home/FullPlayer";
 import { PhotoGallery } from "@/components/pages/home/PhotoGallery";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveVideo }) => {
     const { title, projects = [] } = data ?? {};
@@ -11,17 +12,9 @@ export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveV
         return null
     }
     return (
-        <section className={"w-full flex flex-col  lowercase md:w-1/4 leading-none"}>
-            <details className={"mb-4 [&>div:not(:last-child)>button]:pb-4"}>
-                <summary className={"relative mb-4"}>
-                    <motion.h1
-                        className={"font-bold leading-none inline"}
-                        initial={{ opacity: 1 }}
-                        animate={(activeVideo === null) ? { opacity: 1 } : { opacity: 0.3 }}
-                    >
-                        {title}
-                    </motion.h1></summary>
-                {projects.map((project) => {
+        <section className={"w-full flex flex-col  lowercase md:w-1/4 leading-none [&>div:not(:last-child)>button]:pb-4 mb-4"}>
+
+            {projects.map((project) => {
                     const { _key, _type, fullVideo, previewVideo } = project ?? {};
                     if (_type === "videoObject" && (!fullVideo || !previewVideo)) {
                         return null
@@ -30,7 +23,6 @@ export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveV
                         <Project key={_key} data={project} activeVideo={activeVideo} setActiveVideo={setActiveVideo} setSplashscreenVisible={setSplashscreenVisible} />
                     )
                 })}
-            </details>
         </section>
     )
 }
@@ -62,8 +54,10 @@ const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) 
     const handleClick = () => {
         const details = [...document.querySelectorAll(".details-popover")];
         details.forEach((f) => f.removeAttribute("open"));
+        setPreviewVisible(false)
         if (activeVideo === _key) {
-            setActiveVideo(null)
+            setActiveVideo(null);
+
         } else {
             setActiveVideo(_key)
         }
@@ -88,12 +82,12 @@ const Project = ({ data, activeVideo, setActiveVideo, setSplashscreenVisible }) 
             </button>
 
             {!isActive && (
-                <div className={"hidden md:flex absolute w-3/4 h-[calc(100vh-8.5rem)] right-4 pl-4 top-[136px] max-w-[90rem] flex-col"}>
+                <div className={"hidden md:flex absolute w-3/4 h-[calc(100vh-8.5rem)] right-4 pl-4 top-[136px] max-w-[90rem] flex-col pointer-events-none"}>
                     {_type === "projectObject" ? <PreviewPlayer data={data} previewVisible={previewVisible} />
                         : <PhotoGallery showAll={false} data={data} previewVisible={previewVisible}/>}
                 </div>)
             }
-            {isActive && <div className={"absolute w-[calc(100%-1rem)] pt-4 pr-4 md:pr-0 md:w-3/4 md:right-4 md:pl-4 md:top-[136px] md:pt-0"}>
+            {isActive && <div className={clsx("   md:pr-0  md:right-4 md:pl-4 md:top-[136px] pointer-events-none  ", "relative md:absolute", "w-full md:w-3/4")}>
                 {_type === "projectObject" ? <FullPlayer data={data} previewVisible={previewVisible} />
                     :  <PhotoGallery showAll={true} data={data} previewVisible={previewVisible}/>}
             </div>}

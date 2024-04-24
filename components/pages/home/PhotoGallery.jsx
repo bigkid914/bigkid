@@ -28,6 +28,7 @@ export const PhotoGallery = ({ data, showAll, previewVisible }) => {
             resizeObserver.disconnect();
         };
     }, [metadataContainerRef.current]);
+
     return (
         <>
             <div className={"flex flex-col gap-4 pb-4"}>
@@ -37,7 +38,7 @@ export const PhotoGallery = ({ data, showAll, previewVisible }) => {
                         return null;
                     }
                     return (
-                        <article className={clsx("relative pointer-events-none max-h-[80%]", previewVisible ? "visible" : "invisible")} key={_id}>
+                        <article className={clsx("relative pointer-events-none max-h-[80%]", ((previewVisible && index === 0) || showAll) ? "visible" : "invisible")} key={_id}>
                             {_id ? <Image
                                 _id={_id}
                                 crop={crop}

@@ -3,7 +3,7 @@ import { Image } from "@/components/shared/Image";
 import {  useRef } from "react";
 
 export const Splashscreen = ({ data, splashscreenVisible }) => {
-    const { splashscreens = [] } = data?.data ?? {};
+    const { splashscreens = [] } = data ?? {};
     const logo = useRef(splashscreens[Math.floor(Math.random() * splashscreens.length)]);
 
     if (!splashscreenVisible) {
@@ -11,7 +11,7 @@ export const Splashscreen = ({ data, splashscreenVisible }) => {
     };
 
     return (
-        <div className={"fixed w-screen h-screen top-0 left-0 select-none pointer-events-none z-50 p-5"}>
+        <div className={"fixed w-screen h-screen top-0 left-0 select-none pointer-events-none z-[1000] p-5"}>
             {logo.current?._id ? <Image
                 _id={logo.current._id}
                 width={1000}
