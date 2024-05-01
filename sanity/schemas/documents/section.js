@@ -19,9 +19,9 @@ export default defineType({
         {
           type: "projectObject",
         },
-        {
-          type: "photoObject",
-        },
+        // {
+        //   type: "photoObject",
+        // },
       ],
     }),
   ],

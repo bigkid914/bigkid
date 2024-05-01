@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/file'
 
-export const VideoPlayer = ({ url, playing = true, loop = true, controls = false, muted = true, className }) => {
+export const VideoPlayer = forwardRef(({ url, playing = true, loop = true, controls = false, muted = true, className, onProgress }, ref) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
@@ -12,6 +12,7 @@ export const VideoPlayer = ({ url, playing = true, loop = true, controls = false
 
   return isLoaded ? (
     <ReactPlayer
+      ref={ref}
       url={url}
       width={'100%'}
       height={'100%'}
@@ -21,6 +22,7 @@ export const VideoPlayer = ({ url, playing = true, loop = true, controls = false
       playsinline
       loop={loop}
       className={className}
+      onProgress={onProgress}
     />
   ) : null
-}
+})
