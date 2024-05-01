@@ -106,7 +106,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                         />
                         <div className={"absolute w-full h-full top-0 -z-10"}>
                             <div className={"relative w-full h-full flex items-center justify-center border border-black"} >
-                                <p>preview</p>
+                                <p>preview loading</p>
                             </div>
                         </div>
                     </div>}
@@ -128,7 +128,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                         />
                         <div className={"absolute w-full h-full top-0 -z-10"}>
                             <div className={"relative w-full h-full flex items-center justify-center border border-black"} >
-                                <p>loading</p>
+                                <p>video loading</p>
                             </div>
                         </div>
                     </div>}
