@@ -91,7 +91,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
             isActive ? "block md:flex" : "hidden md:flex")}>
             <article className={clsx("relative pointer-events-none max-h-[80%] ")}>
                 <div className={"relative h-full top-0 z-50"} >
-                    {previewVisible && <div className={clsx("hidden md:flex", "relative h-full flex items-center justify-center ")} style={{ aspectRatio: previewWidth / previewHeight }}>
+                    <div className={clsx("", "relative h-full flex items-center justify-center ", previewVisible ? "invisible md:visible" : "invisible")} style={{ aspectRatio: previewWidth / previewHeight }}>
                         <VideoPlayer
                             url={previewVideo}
                             width={'100%'}
@@ -109,8 +109,8 @@ export const Player = ({ data, isActive, previewVisible }) => {
                                 <p>preview loading</p>
                             </div>
                         </div>
-                    </div>}
-                    {isActive && <div className={clsx("relative h-full flex items-center justify-center")} style={{ aspectRatio: fullWidth / fullHeight }}>
+                    </div>
+                    {isActive && <div className={clsx("absolute top-0 h-full flex items-center justify-center")} style={{ aspectRatio: fullWidth / fullHeight }}>
                         <VideoPlayer
                             ref={videoPlayerRef}
                             url={fullVideo}
