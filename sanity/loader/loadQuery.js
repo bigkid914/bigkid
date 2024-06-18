@@ -76,7 +76,7 @@ export function loadHeader() {
 
 export function loadHomePage(filters) {
   return loadQuery(homePageQuery, filters, {
-    next: { tags: ["home", "section", "director"] },
+    next: { tags: ["section", "home", "director"] },
   });
 }
 

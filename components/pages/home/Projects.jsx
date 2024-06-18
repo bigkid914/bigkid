@@ -9,7 +9,7 @@ export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveV
         return null
     }
     return (
-        <section className={"w-full flex flex-col  lowercase md:w-1/4 leading-none [&>div:not(:last-child)>button]:pb-4 mb-4"}>
+        <section className={"w-full flex flex-col  lowercase md:w-1/4 leading-none [&>div>button]:pb-4"}>
             {projects.map((project) => {
                 const { _key, _type, fullVideo, previewVideo } = project ?? {};
                 if (_type === "videoObject" && (!fullVideo || !previewVideo)) {
