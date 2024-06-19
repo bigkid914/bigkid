@@ -46,6 +46,6 @@
 
 @layer components {
   .link {
-    @apply decoration-1 focus:outline-none focus-visible:underline;
+    @apply decoration-1 focus:outline-none focus-visible:text-[#0000FF];
   }
 }
