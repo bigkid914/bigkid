@@ -11,11 +11,7 @@ export const settingsQuery = groq`
 
 export const headerQuery = groq`
   {
-    "directors": *[_type == "director"] | order(name asc) {
-      _id,
-      name,
-      "slug": slug.current
-    },
+
     "about":*[_type == "home"][0].about[],
     "globalTitle": *[_type == "settings"][0].globalTitle
   }

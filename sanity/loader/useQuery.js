@@ -35,6 +35,6 @@ export const { useLiveMode } = queryStore;
  * Loaders that are used in more than one place are declared here, otherwise they're colocated with the component
  */
 
-export function useSettings(initial) {
-  return useQuery(settingsQuery, {}, { initial });
-}
+// export function useSettings(initial) {
+//   return useQuery(settingsQuery, {}, { initial });
+// }

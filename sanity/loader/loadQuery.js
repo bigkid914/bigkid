@@ -14,10 +14,10 @@ import { token } from "@/sanity/lib/token";
 
 const serverClient = client.withConfig({
   token,
-  stega: {
-    // Enable stega if it's a Vercel preview deployment, as the Vercel Toolbar has controls that shows overlays
-    enabled: process.env.VERCEL_ENV === "preview",
-  },
+  // stega: {
+  //   // Enable stega if it's a Vercel preview deployment, as the Vercel Toolbar has controls that shows overlays
+  //   enabled: process.env.VERCEL_ENV === "preview",
+  // },
 });
 
 /**

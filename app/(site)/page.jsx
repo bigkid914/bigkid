@@ -10,8 +10,8 @@ const HomePagePreview = dynamic(
 export async function generateMetadata() {
   const settings = await loadSettings()
   return {
-    title: settings?.data?.globalTitle.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, ""),
-    description: settings?.data?.globalOverview.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "")
+    title: settings?.data?.globalTitle,
+    description: settings?.data?.globalOverview
   }
 }
 
