@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import {ImageIcon, VideoIcon} from '@sanity/icons'
 
 async function isSlugUnique(slug, context) {
   const { document, getClient } = context;
@@ -43,6 +44,7 @@ export default defineType({
           name: "projectObject",
           title: "Video",
           type: "object",
+          icon: VideoIcon,
           fieldsets: [
             {
               name: "video",
@@ -81,20 +83,64 @@ export default defineType({
             },
             prepare({ title, media, subtitle}) {
               return {
-                title: title || "Project",
+                title: title || "Video",
                 media: media?.pictures?.base_link ? (
                   <img src={media.pictures.base_link} alt={title} style={{width: "100%", height: "100%", objectFit: "cover"}}/>
                 ) : (
-                  <EyeOff strokeWidth={1.5} size={25} />
+                  VideoIcon
                 ),
                 subtitle
               };
             },
           },
-        })
-        // {
-        //   type: "photoObject",
-        // },
+        }),
+        defineArrayMember({
+          name: "photoObject",
+          title: "Photo",
+          type: "object",
+          icon: ImageIcon,
+          fields: [
+            defineField({
+              name: "title",
+              type: "string",
+            }),
+            defineField({
+              name: "photographer",
+              type: "string",
+            }),
+            defineField({
+              name: "date",
+              type: "date",
+              options: {
+                dateFormat: 'MM-DD-YYYY',
+                calendarTodayLabel: 'Today'
+              }
+            }),
+            defineField({
+              type: "array",
+              name: "photos",
+              of: [
+                {
+                  type: "image",
+                },
+              ],
+            }),
+          ],
+          preview: {
+            select: {
+              title: "title",
+              media: "photos.0.asset",
+              subtitle: "director.name",
+            },
+            prepare({ title, media, subtitle }) {
+              return {
+                title: title || "Photo",
+                media: media || ImageIcon,
+                subtitle,
+              };
+            },
+          },
+        }),
       ],
     }),
     defineField({

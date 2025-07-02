@@ -10,7 +10,7 @@ const createUrl = (pathname, params) => {
   const queryString = `${paramsString.length ? "?" : ""}${paramsString}`;
   return `${pathname}${queryString}`;
 };
-export default function HeaderLayout({ data, encodeDataAttribute }) {
+export default function HeaderLayout({ data }) {
   const { title, about = [], sectionOrder = [] } = data ?? {};
   const [filters, setFilters] = useState([]);
   const router = useRouter();

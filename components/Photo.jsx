@@ -3,13 +3,13 @@ import { Image } from "@/components/Image";
 import { useEffect, useRef, useState } from "react";
 import { Metadata } from "@/components/Metadata";
 
-export const PhotoGallery = ({ data, showAll, previewVisible }) => {
+export const Photo = ({ data, showAll, previewVisible }) => {    
 
     const [containerWidth, setContainerWidth] = useState(null);
     const [containerHeight, setContainerHeight] = useState(null);
     const metadataContainerRef = useRef(null);
 
-    const metadata = data.photos[0].metadata;
+    const metadata = data?.photos[0]?.metadata;
 
     useEffect(() => {
         if (!metadataContainerRef.current) {
@@ -30,7 +30,12 @@ export const PhotoGallery = ({ data, showAll, previewVisible }) => {
     }, [metadataContainerRef.current]);
 
     return (
-        <>
+        <div className={clsx(
+            "relative md:absolute",
+            "w-full max-w-[90rem] md:w-[calc(75vw-2rem)]",
+            "h-auto md:h-[calc(100vh-8.5rem)]",
+            "md:right-4 md:top-[136px] pointer-events-none flex-col",
+            showAll ? "block md:flex" : "hidden md:flex")}>
             <div className={"flex flex-col gap-4 pb-4"}>
                 {data?.photos && data.photos.map((photo, index) => {
                     const { _id, crop, hotspot, alt } = photo;
@@ -61,7 +66,7 @@ export const PhotoGallery = ({ data, showAll, previewVisible }) => {
                     </div>}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

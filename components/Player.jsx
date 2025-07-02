@@ -87,9 +87,9 @@ export const Player = ({ data, isActive, previewVisible }) => {
             "relative md:absolute",
             "w-full max-w-[90rem] md:w-[calc(75vw-2rem)]",
             "h-auto md:h-[calc(100vh-8.5rem)]",
-            "md:right-4 md:top-[136px]  pointer-events-none flex-col",
+            "md:right-4 md:top-[136px] pointer-events-none flex-col",
             isActive ? "block md:flex" : "hidden md:flex")}>
-            <article className={clsx("relative pointer-events-none max-h-[80%] ")}>
+            <article className={clsx("relative pointer-events-none max-h-[80%]")}>
                 <div className={"relative h-full top-0 z-50"} >
                     <div className={clsx("", "relative h-full flex items-center justify-center ", previewVisible ? "invisible md:visible" : "invisible")} style={{ aspectRatio: previewWidth / previewHeight }}>
                         <VideoPlayer

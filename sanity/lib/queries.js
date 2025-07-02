@@ -22,59 +22,6 @@ export const settingsQuery = groq`
   }
 `;
 
-export const homePageQuery = groq`
-  *[_type == "home"][0]{
-    _id,
-    "sections": sectionOrder[] -> {
-      _id,
-      title,
-      count($filters) > 0 => {
-        "projects": projects[director->slug.current in $filters && defined(preview.files[quality match "hls"][0].link) && _type == "photoObject" || defined(fullVideo.files[quality match "hls"][0].link)] {
-          _key,
-          title,
-          _type,
-          "director": director->name,
-          "previewVideo": preview.files[quality match "hls"][0].link,
-          "fullVideo": fullVideo.files[quality match "hls"][0].link,
-          "previewWidth": preview.width,
-          "previewHeight": preview.height,
-          "fullWidth": fullVideo.width,
-          "fullHeight": fullVideo.height,
-          "fullDuration": fullVideo.duration,
-          "size": fullVideo.files[] | order(size desc)[0].size,
-          "date": fullVideo.release_time,
-          "fps": fullVideo.files[quality match "hls"][0].fps,
-          photos[] {
-            ${imageFragment}
-          }
-        }
-    	},
-      count($filters) == 0 => {
-        "projects": projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
-          _key,
-          title,
-          _type,
-          "director": director->name,
-          "previewVideo": preview.files[quality match "hls"][0].link,
-          "fullVideo": fullVideo.files[quality match "hls"][0].link,
-          "previewWidth": preview.width,
-          "previewHeight": preview.height,
-          "fullWidth": fullVideo.width,
-          "fullHeight": fullVideo.height,
-          "fullDuration": fullVideo.duration,
-          "size": fullVideo.files[] | order(size desc)[0].size,
-          "date": fullVideo.release_time,
-          "fps": fullVideo.files[quality match "hls"][0].fps,
-          photos[] {
-            ${imageFragment}
-          }
-        }
-    	},
-    },
-    about[],
-  }
-`;
-
 export const directorQuery = groq`
  *[_type == "director" && slug.current in *[_type == "section"].projects[].director->slug.current] | order(name asc) {
       _id,
@@ -85,23 +32,32 @@ export const directorQuery = groq`
 
 export const pageQuery = groq`
   *[_type == "section" && slug.current == $slug][0]{
-    "projects": projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
-      _key,
-      title,
-      _type,
-      "director": director->name,
-      "previewVideo": preview.files[quality match "hls"][0].link,
-      "fullVideo": fullVideo.files[quality match "hls"][0].link,
-      "previewWidth": preview.width,
-      "previewHeight": preview.height,
-      "fullWidth": fullVideo.width,
-      "fullHeight": fullVideo.height,
-      "fullDuration": fullVideo.duration,
-      "size": fullVideo.files[] | order(size desc)[0].size,
-      "date": fullVideo.release_time,
-      "fps": fullVideo.files[quality match "hls"][0].fps,
-      photos[] {
-        ${imageFragment}
+    projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)]{
+      _type == 'projectObject' => {
+        _key,
+        title,
+        _type,
+        "director": director->name,
+        "previewVideo": preview.files[quality match "hls"][0].link,
+        "fullVideo": fullVideo.files[quality match "hls"][0].link,
+        "previewWidth": preview.width,
+        "previewHeight": preview.height,
+        "fullWidth": fullVideo.width,
+        "fullHeight": fullVideo.height,
+        "fullDuration": fullVideo.duration,
+        "size": fullVideo.files[] | order(size desc)[0].size,
+        "date": fullVideo.release_time,
+        "fps": fullVideo.files[quality match "hls"][0].fps
+      },
+      _type == 'photoObject' => {
+        _key,
+        title,
+        _type,
+        photographer,
+        date,
+        photos[] {
+          ${imageFragment}
+        }
       }
     },
     "seo": {

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { visionTool } from "@sanity/vision";
 import { defineConfig, definePlugin, isDev } from "sanity";
 import { presentationTool } from "sanity/presentation";
@@ -17,7 +17,6 @@ import director from "@/sanity/schemas/documents/director";
 
 // Objects
 import linkWithSelector from "@/sanity/schemas/custom/link/linkWithSelector";
-import overview from "@/sanity/schemas/objects/overview";
 import photoObject from "@/sanity/schemas/objects/photoObject";
 
 import vimeoObject from "@/sanity/schemas/objects/vimeoObject";
@@ -27,12 +26,7 @@ import basicBlock from "@/sanity/schemas/blocks/basicBlock";
 
 const singletons = new Set([settings, home]);
 const documents = new Set([section, director]);
-const objects = new Set([
-  linkWithSelector,
-  overview,
-  vimeoObject,
-  photoObject
-]);
+const objects = new Set([linkWithSelector, vimeoObject, photoObject]);
 const arrays = new Set([]);
 const blocks = new Set([basicBlock]);
 const modules = new Set([]);
@@ -64,7 +58,10 @@ const analyticsPlugin = definePlugin({
             title="Site Analytics Dashboard"
             aria-label="Analytics data visualization"
           ></iframe>
-          <script async src="https://analytics.soup.work/js/embed.host.js"></script>
+          <script
+            async
+            src="https://analytics.soup.work/js/embed.host.js"
+          ></script>
         </div>
       ),
     },

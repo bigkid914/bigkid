@@ -37,6 +37,7 @@ export default async function PageSlugRoute({ params }) {
       slug: slug,
     },
   });
+  
 
   if (!data) {
     return <NotFound />;
