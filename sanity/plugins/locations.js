@@ -2,17 +2,8 @@ import { map } from "rxjs";
 import { resolveHref } from "@/sanity/lib/utils";
 
 export const locations = (params, context) => {
-  if (params.type === "settings") {
-    return {
-      message: "This document is used across the bigkid site.",
-      tone: "caution",
-    };
-  }
 
-  if (
-    params.type === "home" ||
-    params.type === "section" 
-  ) {
+  if (params.type === "settings" || params.type === "section") {
     const doc$ = context.documentStore.listenQuery(
       `*[_id==$id || references($id)]{_type,slug,title}`,
       params,
@@ -20,17 +11,16 @@ export const locations = (params, context) => {
     );
     return doc$.pipe(
       map((docs) => {
-        const isReferencedByHome = docs?.some(
-          (doc) => doc._type === "home",
+        const isReferencedBySettings = docs?.some(
+          (doc) => doc._type === "settings",
         );
         switch (params.type) {
-          case "home":
+          case "settings":
             return {
-              message:
-                "Used as the bigkid landing page.",
-              tone: "positive",
+              message: "This document is used across the bigkid site.",
+              tone: "caution",
             };
- 
+
           case "section":
             return {
               locations: docs
@@ -42,8 +32,8 @@ export const locations = (params, context) => {
                   };
                 })
                 .filter((doc) => doc.href !== undefined),
-              tone: isReferencedByHome ? "positive" : "critical",
-              message: isReferencedByHome
+              tone: isReferencedBySettings ? "positive" : "critical",
+              message: isReferencedBySettings
                 ? "This section is visible on the bigkid homepage."
                 : "This section isn’t included on the bigkid homepage. Add this section to your home document to make it visible.",
             };

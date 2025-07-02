@@ -1,16 +1,21 @@
 "use client"
-import { Player } from "@/components/pages/home/Player";
+import { Player } from "@/components/Player";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useStore } from "@/app/state";
 
-export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveVideo }) => {
+export const Projects = ({ data }) => {
+    const activeVideo = useStore((store) => store.activeVideo);
+    const setActiveVideo = useStore((store) => store.setActiveVideo);
+    const setSplashscreenVisible = useStore((store) => store.setSplashscreenVisible);
+
     const {  projects = [] } = data ?? {};
 
     if (projects.length === 0) {
         return null
     }
     return (
-        <section className={"w-full flex flex-col  lowercase md:w-1/4 leading-none [&>div>button]:pb-4"}>
+        <section className={"w-full flex flex-col lowercase md:w-1/4 leading-none [&>div>button]:pb-4"}>
             {projects.map((project) => {
                 const { _key, _type, fullVideo, previewVideo } = project ?? {};
                 if (_type === "videoObject" && (!fullVideo || !previewVideo)) {

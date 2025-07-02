@@ -18,7 +18,6 @@ import director from "@/sanity/schemas/documents/director";
 // Objects
 import linkWithSelector from "@/sanity/schemas/custom/link/linkWithSelector";
 import overview from "@/sanity/schemas/objects/overview";
-import projectObject from "@/sanity/schemas/objects/projectObject";
 import photoObject from "@/sanity/schemas/objects/photoObject";
 
 import vimeoObject from "@/sanity/schemas/objects/vimeoObject";
@@ -31,7 +30,6 @@ const documents = new Set([section, director]);
 const objects = new Set([
   linkWithSelector,
   overview,
-  projectObject,
   vimeoObject,
   photoObject
 ]);

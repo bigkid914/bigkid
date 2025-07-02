@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { Image } from "@/components/shared/Image";
+import { Image } from "@/components/Image";
 import { useEffect, useRef, useState } from "react";
-import { Metadata } from "@/components/pages/home/Metadata";
+import { Metadata } from "@/components/Metadata";
 
 export const PhotoGallery = ({ data, showAll, previewVisible }) => {
 

@@ -1,5 +1,5 @@
-import { Metadata } from "@/components/pages/home/Metadata";
-import { VideoPlayer } from "@/components/shared/VideoPlayer";
+import { Metadata } from "@/components/Metadata";
+import { VideoPlayer } from "@/components/VideoPlayer";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { stegaClean } from "next-sanity";
@@ -26,14 +26,14 @@ export const Player = ({ data, isActive, previewVisible }) => {
             return;
         }
         const resizeObserver = new ResizeObserver(() => {
-            if (metadataContainerRef.current.offsetWidth !== containerWidth) {
-                setContainerWidth(metadataContainerRef.current.offsetWidth);
+            if (metadataContainerRef?.current?.offsetWidth !== containerWidth) {
+                setContainerWidth(metadataContainerRef?.current?.offsetWidth);
             }
-            if (metadataContainerRef.current.offsetHeight !== containerHeight) {
-                setContainerHeight(metadataContainerRef.current.offsetHeight);
+            if (metadataContainerRef?.current?.offsetHeight !== containerHeight) {
+                setContainerHeight(metadataContainerRef?.current?.offsetHeight);
             }
         });
-        resizeObserver.observe(metadataContainerRef.current);
+        resizeObserver.observe(metadataContainerRef?.current);
         return function cleanup() {
             resizeObserver.disconnect();
         };
@@ -87,7 +87,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
             "relative md:absolute",
             "w-full max-w-[90rem] md:w-[calc(75vw-2rem)]",
             "h-auto md:h-[calc(100vh-8.5rem)]",
-            "md:right-4 md:top-[136px]  pointer-events-none overflow-hidden flex-col",
+            "md:right-4 md:top-[136px]  pointer-events-none flex-col",
             isActive ? "block md:flex" : "hidden md:flex")}>
             <article className={clsx("relative pointer-events-none max-h-[80%] ")}>
                 <div className={"relative h-full top-0 z-50"} >

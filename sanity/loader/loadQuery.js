@@ -6,7 +6,7 @@ import { draftMode } from "next/headers";
 import { client } from "@/sanity/lib/client";
 import {
   homePageQuery,
-  headerQuery,
+  settingsQuery,
   directorQuery,
   settingsQuery,
 } from "@/sanity/lib/queries";
@@ -68,7 +68,7 @@ export function loadSettings() {
 
 export function loadHeader() {
   return loadQuery(
-    headerQuery,
+    settingsQuery,
     {},
     { next: { tags: ["settings", "home", "section"] } },
   );

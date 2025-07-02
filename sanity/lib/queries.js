@@ -1,19 +1,24 @@
 import { groq } from "next-sanity";
-import { contentFragment, imageFragment } from "./fragments";
+import { imageFragment } from "./fragments";
 
 export const settingsQuery = groq`
   *[_type == "settings"][0]{
-    globalTitle,
-    globalOverview,
-    ogImage,
-  }
-`;
-
-export const headerQuery = groq`
-  {
-
-    "about":*[_type == "home"][0].about[],
-    "globalTitle": *[_type == "settings"][0].globalTitle
+    title,
+    about[],
+    splashscreens[]{
+        _key,
+        ${imageFragment}
+    },
+    sectionOrder[] -> {
+      _id,
+      title,
+      slug
+    },
+    seo {
+      ogTitle,
+      ogDescription,
+      ogImage,
+    }
   }
 `;
 
@@ -67,10 +72,6 @@ export const homePageQuery = groq`
     	},
     },
     about[],
-    splashscreens[]{
-        _key,
-        ${imageFragment}
-    },
   }
 `;
 
@@ -79,5 +80,34 @@ export const directorQuery = groq`
       _id,
       name,
       "slug": slug.current
+  }
+`;
+
+export const pageQuery = groq`
+  *[_type == "section" && slug.current == $slug][0]{
+    "projects": projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)] {
+      _key,
+      title,
+      _type,
+      "director": director->name,
+      "previewVideo": preview.files[quality match "hls"][0].link,
+      "fullVideo": fullVideo.files[quality match "hls"][0].link,
+      "previewWidth": preview.width,
+      "previewHeight": preview.height,
+      "fullWidth": fullVideo.width,
+      "fullHeight": fullVideo.height,
+      "fullDuration": fullVideo.duration,
+      "size": fullVideo.files[] | order(size desc)[0].size,
+      "date": fullVideo.release_time,
+      "fps": fullVideo.files[quality match "hls"][0].fps,
+      photos[] {
+        ${imageFragment}
+      }
+    },
+    "seo": {
+      "ogTitle": coalesce(ogTitle, title),
+      "ogDescription": coalesce(ogDescription, *[_type == "settings"][0].seo.ogDescription),
+      "ogImage": coalesce(ogImage, *[_type == "settings"][0].seo.ogImage),
+  	}
   }
 `;
