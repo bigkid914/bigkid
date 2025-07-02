@@ -1,17 +1,11 @@
-import dynamic from 'next/dynamic'
-import { draftMode } from 'next/headers'
-
-import { loadHeader } from '@/sanity/loader/loadQuery'
-
-import HeaderLayout from './HeaderLayout'
-const HeaderPreview = dynamic(() => import('./HeaderPreview'))
+import { sanityFetch } from "@/sanity/lib/live";
+import HeaderLayout from "./HeaderLayout";
+import { headerQuery } from "@/sanity/lib/queries";
 
 export async function Header() {
-  const initial = await loadHeader()
+  const { data } = await sanityFetch({
+    query: headerQuery,
+  });
 
-  if (draftMode().isEnabled) {
-    return <HeaderPreview initial={initial} />
-  }
-
-  return <HeaderLayout data={initial.data} />
+  return <HeaderLayout data={data} />;
 }

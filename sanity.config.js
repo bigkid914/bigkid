@@ -1,11 +1,11 @@
+"use client"
 import { visionTool } from "@sanity/vision";
-import { defineConfig, isDev } from "sanity";
-import { deskTool } from "sanity/desk";
+import { defineConfig, definePlugin, isDev } from "sanity";
 import { presentationTool } from "sanity/presentation";
-import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
-import { locate } from "@/sanity/plugins/locate";
+import { apiVersion, dataset, projectId } from "@/sanity/lib/api";
+import { locations } from "@/sanity/plugins/locations";
 import { pageStructure } from "@/sanity/plugins/settings";
-import "@/sanity/sanity.css";
+import { structureTool } from "sanity/structure";
 
 // Singletons
 import settings from "@/sanity/schemas/singletons/settings";
@@ -48,11 +48,37 @@ const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 //   type: document.name,
 // }));
 
+import BigkidLogo from "@/app/apple-icon.png";
+
+const analyticsPlugin = definePlugin({
+  name: "sanity-plugin-analytics",
+  tools: [
+    {
+      name: "analytics",
+      title: "Analytics",
+      icon: () => "📊",
+      component: () => (
+        <div className="w-full h-full">
+          <iframe
+            src={`${process.env.NEXT_PUBLIC_PLAUSIBLE_SHARED_LINK}&embed=true&theme=system&background=transparent`}
+            loading="lazy"
+            style={{ width: "1px", minWidth: "100%", height: "100%" }}
+            title="Site Analytics Dashboard"
+            aria-label="Analytics data visualization"
+          ></iframe>
+          <script async src="https://analytics.soup.work/js/embed.host.js"></script>
+        </div>
+      ),
+    },
+  ],
+});
+
 export default defineConfig({
-  basePath: studioUrl,
+  basePath: "/studio",
   projectId: projectId || "",
   dataset: dataset || "",
   title: "bigkid",
+  icon: () => <img src={BigkidLogo.src} alt="" width={25} height={25} />,
   schema: {
     types: [
       ...singletons,
@@ -66,20 +92,14 @@ export default defineConfig({
       templates.filter(({ schemaType }) => !singletonDocs.has(schemaType)),
   },
   plugins: [
-    deskTool({
-      structure: pageStructure(Array.from(singletons)),
-    }),
     presentationTool({
-      locate,
-      previewUrl: {
-        origin:
-          typeof location === "undefined"
-            ? "http://localhost:3000"
-            : location.origin,
-        draftMode: {
-          enable: "/api/draft",
-        },
+      resolve: {
+        locations,
       },
+      previewUrl: { previewMode: { enable: "/api/draft-mode/enable" } },
+    }),
+    structureTool({
+      structure: pageStructure(),
     }),
     ...(isDev ? [visionTool({ defaultApiVersion: apiVersion })] : []),
   ],

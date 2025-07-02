@@ -4,11 +4,11 @@ import clsx from "clsx";
 import { dataset, projectId } from "@/sanity/lib/api";
 
 const GenerateImage = (props) => {
-	const baseUrl = `https://cdn.sanity.io/images/${[projectId]}/${dataset}/`;
+	const baseUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/`;
 	return <SanityImage baseUrl={baseUrl} {...props} />;
 };
 
-export const Image = ({ _id, hotspot, crop, alt = '', preview, sizes = '100vw', mode = 'contain', width = 1500, className, loading = "lazy", dataSanity }) => {
+export const Image = ({ _id, hotspot, crop, alt = '', preview, sizes = '100vw', mode = 'contain', width = 1500, className, loading = "lazy" }) => {
 	if (!_id) {
 		throw new Error("Image _id is undefined.")
 	}
@@ -24,7 +24,6 @@ export const Image = ({ _id, hotspot, crop, alt = '', preview, sizes = '100vw', 
 			className={clsx('w-full', className)}
 			sizes={sizes}
 			loading={loading}
-			data-sanity={dataSanity}
 		/>
 	)
 }

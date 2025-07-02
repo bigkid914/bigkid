@@ -1,7 +1,0 @@
-[data-ui="PaneItem"] *:not(svg) + span {
-  box-shadow: none !important;
-}
-
-[data-testid="Media"] *:not(svg) + span {
-  box-shadow: none !important;
-}

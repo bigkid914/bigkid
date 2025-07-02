@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 export const Projects = ({ data, setSplashscreenVisible, activeVideo, setActiveVideo }) => {
     const {  projects = [] } = data ?? {};
+
     if (projects.length === 0) {
         return null
     }

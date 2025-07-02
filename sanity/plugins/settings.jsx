@@ -1,46 +1,59 @@
-import Emoji from "a11y-react-emoji";
+import {
+  AddCircleIcon,
+  BlockContentIcon,
+  CheckmarkCircleIcon,
+  CloseCircleIcon,
+  CogIcon,
+  CommentIcon,
+  DocumentIcon,
+  FolderIcon,
+  HelpCircleIcon,
+  HomeIcon,
+} from "@sanity/icons";
 
-// The StructureResolver is how we're changing the DeskTool structure to linking to document (named Singleton)
-// like how "Home" is handled.
-export const pageStructure = (typeDefArray) => {
+export const pageStructure = () => {
   return (S) => {
-    // Goes through all of the singletons that were provided and translates them into something the
-    // Desktool can understand
-    const singletonItems = typeDefArray.map((typeDef) => {
-      return S.listItem()
-        .title(typeDef.title)
-        .icon(typeDef.icon)
-        .child(
-          S.editor()
-            .id(typeDef.name)
-            .schemaType(typeDef.name)
-            .documentId(typeDef.name),
-        )
-    })
-
-    // The default root list items (except custom ones)
-    const defaultListItems = S.documentTypeListItems().filter(
-      (listItem) =>
-        !typeDefArray.find((singleton) => singleton.name === listItem.getId()),
-    )
-
     return S.list()
       .title("Content")
-      .items([...singletonItems, S.divider(), ...defaultListItems])
-  }
-}
+      .items([
+        S.listItem()
+          .title("Home")
+          .icon(HomeIcon)
+          .child(S.editor().id("home").schemaType("home").documentId("home")),
+        S.divider(),
+        S.listItem()
+          .title("Sections")
+          .schemaType("section")
+          .icon(FolderIcon)
+          .child(() =>
+            S.documentList()
+              .schemaType("section")
+              .title("Section")
+              .filter("_type == 'section'")
+              .child((id) => S.document().documentId(id).schemaType("section")),
+          ),
+        S.listItem()
+          .title("Directors")
+          .schemaType("director")
+          .icon(FolderIcon)
+          .child(() =>
+            S.documentList()
+              .schemaType("director")
+              .title("Director")
+              .filter("_type == 'director'")
+              .child((id) => S.document().documentId(id).schemaType("director")),
+          ),
+        S.divider(),
+        S.listItem()
+          .title("Settings")
+          .icon(CogIcon)
+          .child(
+            S.editor()
+              .id("settings")
+              .schemaType("settings")
+              .documentId("settings"),
+          ),
 
-const documentIcons = [
-  { name: "home", emoji: "🏠" },
-  { name: "settings", emoji: "⚙️" },
-  { name: "section", emoji: "📄" },
-  { name: "director", emoji: "🎬" },
-]
-
-const createIcons = [...documentIcons].map((icon) => {
-  return {
-    [icon.name]: <Emoji style={{ fontSize: "1.5em" }} symbol={icon.emoji} label={icon.name} />,
+      ]);
   };
-});
-
-export const Icons = Object.assign(...createIcons)
+};

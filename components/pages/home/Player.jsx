@@ -2,7 +2,7 @@ import { Metadata } from "@/components/pages/home/Metadata";
 import { VideoPlayer } from "@/components/shared/VideoPlayer";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-
+import { stegaClean } from "next-sanity";
 import Slider from 'react-input-slider';
 
 export const Player = ({ data, isActive, previewVisible }) => {
@@ -93,7 +93,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                 <div className={"relative h-full top-0 z-50"} >
                     <div className={clsx("", "relative h-full flex items-center justify-center ", previewVisible ? "invisible md:visible" : "invisible")} style={{ aspectRatio: previewWidth / previewHeight }}>
                         <VideoPlayer
-                            url={previewVideo}
+                            url={stegaClean(previewVideo)}
                             width={'100%'}
                             height={'100%'}
                             controls={false}
@@ -102,7 +102,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                             playsinline
                             loop={true}
                             className={"w-auto h-full"}
-                            style={{ aspectRatio: previewWidth / previewHeight }}
+                            style={{ aspectRatio: stegaClean(previewWidth) / stegaClean(previewHeight) }}
                         />
                         <div className={"absolute w-full h-full top-0 -z-10"}>
                             <div className={"relative w-full h-full flex items-center justify-center border border-black"} >
@@ -110,10 +110,10 @@ export const Player = ({ data, isActive, previewVisible }) => {
                             </div>
                         </div>
                     </div>
-                    {isActive && <div className={clsx("absolute top-0 h-full flex items-center justify-center")} style={{ aspectRatio: fullWidth / fullHeight }}>
+                    {isActive && <div className={clsx("absolute top-0 h-full flex items-center justify-center")} style={{ aspectRatio: stegaClean(fullWidth) / stegaClean(fullHeight) }}>
                         <VideoPlayer
                             ref={videoPlayerRef}
-                            url={fullVideo}
+                            url={stegaClean(fullVideo)}
                             width={'100%'}
                             height={'100%'}
                             controls={false}
@@ -122,7 +122,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                             playsinline
                             loop={false}
                             className={"w-auto h-full"}
-                            style={{ aspectRatio: fullWidth / fullHeight }}
+                            style={{ aspectRatio: stegaClean(fullWidth) / stegaClean(fullHeight) }}
                             onProgress={progressHandler}
 
                         />
@@ -135,7 +135,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                 </div>
             </article>
             <div className={clsx("relative pointer-events-none z-10 max-h-[80%]")} >
-                <div className={"relative h-full max-w-full md:aspect-[--aspect] "} style={{ "--aspect": previewWidth / previewHeight }}>
+                <div className={"relative h-full max-w-full md:aspect-[--aspect] "} style={{ "--aspect": stegaClean(previewWidth) / stegaClean(previewHeight) }}>
                     <div className={"relative w-full h-[20%] mt-4"} ref={metadataContainerRef}>
                         {previewVisible && <div className={clsx("hidden md:block", "relative w-full h-full")}>
                             <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{new Date(date).toLocaleDateString("en-US", {

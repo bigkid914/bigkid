@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,9 +23,29 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "target": "ES2017"
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "app/layout.jsx", "sanity/loader/createQueryStore.js", "sanity/loader/generateStaticSlugs.js", "sanity/loader/useQuery.js", "sanity/loader/VisualEditing.jsx", "sanity.cli.js", "app/ClientLayout.jsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/layout.jsx",
+    "sanity/loader/createQueryStore.js",
+    "sanity/loader/generateStaticSlugs.js",
+    "sanity/loader/useQuery.js",
+    "sanity/loader/VisualEditing.jsx",
+    "sanity.cli.js",
+    "app/ClientLayout.jsx",
+    "app/client-utils.js",
+    "app/actions.js",
+    "sanity/lib/live.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

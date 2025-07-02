@@ -1,11 +1,9 @@
-import { Icons } from "@/sanity/plugins/settings";
-import {  defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
 export default defineType({
   type: "document",
   name: "section",
   title: "Section",
-  icon: () => Icons.section,
   fields: [
     defineField({
       name: "title",

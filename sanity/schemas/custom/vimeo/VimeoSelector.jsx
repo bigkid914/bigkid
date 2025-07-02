@@ -6,7 +6,7 @@ import { ArrowDownAZ, ArrowDownZA, ArrowUpDown, ExternalLink, ListVideo, Play, S
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import pluralize from "pluralize";
 import React, { Fragment, useRef, useState, useEffect } from "react";
-import ReactPlayer from 'react-player/file'
+import ReactPlayer from 'react-player'
 import { useFormValue, useClient } from "sanity";
 
 const createUrl = (pathname, params) => {

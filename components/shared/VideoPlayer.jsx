@@ -1,7 +1,7 @@
 'use client'
 
 import React, { forwardRef, useEffect, useState } from 'react'
-import ReactPlayer from 'react-player/file'
+import ReactPlayer from 'react-player'
 
 export const VideoPlayer = forwardRef(({ url, playing = true, loop = true, controls = false, muted = true, className, onProgress }, ref) => {
   const [isLoaded, setIsLoaded] = useState(false)

@@ -1,8 +1,10 @@
 "use client"
 import { Suspense, useEffect, useState } from "react";
 import { Projects } from './Projects'
-import { Splashscreen } from "@/components/shared/Splashscreen";
 import { useStore } from "@/app/state";
+import dynamic from 'next/dynamic'
+ 
+const Splashscreen = dynamic(() => import('@/components/shared/Splashscreen'), { ssr: false })
 
 export function HomePage({data}) {
   const { sections = [] } = data ?? {};
@@ -15,6 +17,8 @@ export function HomePage({data}) {
     window.addEventListener("click", hideSplash);
     return () => window.removeEventListener("click", hideSplash);
   }, []);
+
+  
 
   return (
     <>

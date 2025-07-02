@@ -1,4 +1,3 @@
-import { Icons } from "@/sanity/plugins/settings";
 import {  defineField, defineType } from "sanity";
 
 async function isSlugUnique(slug, context) {
@@ -19,7 +18,6 @@ export default defineType({
   type: "document",
   name: "director",
   title: "Director",
-  icon: () => Icons.director,
   fields: [
     defineField({
       name: "name",

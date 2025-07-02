@@ -15,9 +15,13 @@ export const urlForImage = (source) => {
   return imageBuilder?.image(source).auto("format").fit("max");
 };
 
-export function urlForOpenGraphImage(image) {
-  return urlForImage(image)?.width(1200).height(627).fit("crop").url();
+export function resolveOpenGraphImage(image, width = 1200, height = 627) {
+  if (!image) return;
+  const url = urlForImage(image)?.width(1200).height(627).fit("crop").crop("entropy").url();
+  if (!url) return;
+  return { url, alt: image?.alt, width, height };
 }
+
 
 export function resolveHref(documentType, slug) {
   switch (documentType) {
@@ -29,4 +33,14 @@ export function resolveHref(documentType, slug) {
       console.warn("Invalid document type:", documentType);
       return undefined;
   }
+}
+
+
+
+export function dataAttr(config) {
+  return createDataAttribute({
+    projectId,
+    dataset,
+    baseUrl: studioUrl,
+  }).combine(config);
 }

@@ -1,11 +1,9 @@
-import { Icons } from "@/sanity/plugins/settings";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export default defineType({
   name: "home",
   title: "Home",
   type: "document",
-  icon: () => Icons.home,
   fields: [
     defineField({
       name: "sectionOrder",

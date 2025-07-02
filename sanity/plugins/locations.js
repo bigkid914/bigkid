@@ -1,7 +1,7 @@
 import { map } from "rxjs";
 import { resolveHref } from "@/sanity/lib/utils";
 
-export const locate = (params, context) => {
+export const locations = (params, context) => {
   if (params.type === "settings") {
     return {
       message: "This document is used across the bigkid site.",
