@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import { useStore } from "@/app/state";
 import { CustomPortableText } from "@/components/CustomPortableText";
+import Link from "next/link";
 
 const createUrl = (pathname, params) => {
   const paramsString = params.toString();
@@ -47,16 +48,16 @@ export default function HeaderLayout({ data }) {
         "flex flex-col md:grid",
       )}
     >
-      <a className={"col-span-5 md:col-span-6 text-left w-max link"} href={"/"}>
+      <Link className={"col-span-5 md:col-span-6 text-left w-max link"} href={"/"}>
         <h1>{title}</h1>
-      </a>
+      </Link>
       <Collapsible title={"about"} className={"col-start-6 md:col-start-[15]"}>
         {<CustomPortableText value={about} />}
       </Collapsible>
       <div className="col-span-full row-start-2 flex gap-4">
         {sectionOrder.map((section) => {
           return section?.slug ? (
-            <a
+            <Link
               key={section._id}
               href={`/${section?.slug?.current}`}
               className={"relative link"}
@@ -70,7 +71,7 @@ export default function HeaderLayout({ data }) {
               >
                 {section.title}
               </h2>
-            </a>
+            </Link>
           ) : null;
         })}
       </div>
