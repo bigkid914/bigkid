@@ -65,6 +65,10 @@ export default defineType({
               to: [{ type: "director" }],
             }),
             defineField({
+              name: "credits",
+              type: "basicBlock",
+            }),
+            defineField({
               name: "preview",
               type: "vimeoObject",
               fieldset: "video",

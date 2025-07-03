@@ -38,6 +38,7 @@ export const pageQuery = groq`
         title,
         _type,
         "director": director->name,
+        "credits": credits[],
         "previewVideo": preview.files[quality match "hls"][0].link,
         "fullVideo": fullVideo.files[quality match "hls"][0].link,
         "previewWidth": preview.width,
