@@ -30,7 +30,7 @@ export function LinkInput(props) {
             <div
               className={clsx(
                 "flex w-14 h-11 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium ",
-                value === link.value ? "text-white" : "text-black",
+                value === link.value ? "text-white dark:text-black" : "text-black dark:text-white",
               )}
             >
               {createElement(link.icon)}

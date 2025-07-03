@@ -1,4 +1,5 @@
 import {  defineField, defineType } from "sanity";
+import { UserIcon } from "@sanity/icons";
 
 async function isSlugUnique(slug, context) {
     const { document, getClient } = context;
@@ -18,6 +19,7 @@ export default defineType({
   type: "document",
   name: "director",
   title: "Director",
+  icon: UserIcon,
   fields: [
     defineField({
       name: "name",

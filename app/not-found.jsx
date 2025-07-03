@@ -5,6 +5,13 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { Header } from "@/components/Header";
 import { NotFound } from "@/components/NotFound";
 
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
+
 export async function generateMetadata() {
   const { data: settings } = await sanityFetch({
     query: settingsQuery,
@@ -27,17 +34,17 @@ export async function generateMetadata() {
 
 export default async function NotFoundRoute() {
   return (
-    <>
+    <div className={"h-svh overflow-y-auto bg-white dark:bg-black dark:text-white"}>
       <Suspense>
         <Header />
       </Suspense>
       <main
         className={
-          "min-h-[calc(100vh-170px)] w-screen overflow-x-hidden px-4 pb-4 font-serif font-sm bg-white"
+          "min-h-[calc(100vh-170px)] w-screen overflow-x-hidden px-4 pb-4 font-serif font-sm"
         }
       >
         <NotFound />
       </main>
-    </>
+    </div>
   );
 }

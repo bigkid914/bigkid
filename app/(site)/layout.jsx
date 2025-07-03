@@ -11,8 +11,11 @@ import { settingsQuery } from "@/sanity/lib/queries";
 import Splashscreen from "@/components/Splashscreen";
 
 export const viewport = {
-  themeColor: "#000",
-};
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
+  ],
+}
 
 export async function generateMetadata() {
   const { data: settings } = await sanityFetch({
@@ -50,17 +53,20 @@ export default async function LayoutRoute(props) {
         </>
       )}
       <SanityLive onError={handleError} />
-      <Suspense>
-        <Header />
-      </Suspense>
-      <Splashscreen data={settings} />
-      <main
-        className={
-          "w-screen overflow-x-hidden px-4 pb-4 font-serif font-sm bg-white"
-        }
-      >
-        {props.children}
-      </main>
+      <div className={"h-svh overflow-y-auto bg-white dark:bg-black dark:text-white"}>
+        <Suspense>
+          <Header />
+        </Suspense>
+        <Splashscreen data={settings} />
+        <main
+          className={
+            "w-screen overflow-x-hidden px-4 pb-4 mt-12 font-serif font-sm "
+          }
+        >
+          {props.children}
+        </main>
+        
+      </div>
     </>
   );
 }

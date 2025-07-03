@@ -1,3 +1,4 @@
+"use client"
 import { Metadata } from "@/components/Metadata";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import clsx from "clsx";
@@ -20,6 +21,18 @@ export const Player = ({ data, isActive, previewVisible }) => {
     const [progressing, setProgressing] = useState(false)
 
     const [time, setTime] = useState(fullDuration)
+    const [isDarkMode, setIsDarkMode] = useState(false)
+
+    // Detect dark mode preference
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        setIsDarkMode(mediaQuery.matches)
+        
+        const handleChange = (e) => setIsDarkMode(e.matches)
+        mediaQuery.addEventListener('change', handleChange)
+        
+        return () => mediaQuery.removeEventListener('change', handleChange)
+    }, [])
 
     useEffect(() => {
         if (!metadataContainerRef.current) {
@@ -105,7 +118,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
                             style={{ aspectRatio: stegaClean(previewWidth) / stegaClean(previewHeight) }}
                         />
                         <div className={"absolute w-full h-full top-0 -z-10"}>
-                            <div className={"relative w-full h-full flex items-center justify-center border border-black"} >
+                            <div className={"relative w-full h-full flex items-center justify-center border border-black dark:border-white"} >
                                 <p>preview loading</p>
                             </div>
                         </div>
@@ -127,7 +140,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
 
                         />
                         <div className={"absolute w-full h-full top-0 -z-10"}>
-                            <div className={"relative w-full h-full flex items-center justify-center border border-black"} >
+                            <div className={"relative w-full h-full flex items-center justify-center border border-black dark:border-white"} >
                                 <p>video loading</p>
                             </div>
                         </div>
@@ -161,20 +174,20 @@ export const Player = ({ data, isActive, previewVisible }) => {
                                     styles={{
                                         track: {
                                             width: "100%",
-                                            backgroundColor: "black",
+                                            backgroundColor: isDarkMode ? "white" : "black",
                                             height: "1px",
                                             borderRadius: 0
                                         },
                                         active: {
-                                            backgroundColor: "black"
+                                            backgroundColor: isDarkMode ? "white" : "black"
                                         },
                                         thumb: {
                                             width: 1,
                                             height: 15,
                                             borderRadius: 0,
-                                            borderColor: "black",
+                                            borderColor: isDarkMode ? "white" : "black",
                                             border: "1px",
-                                            background: "black",
+                                            background: isDarkMode ? "white" : "black",
                                             boxShadow: "none"
                                         },
                                         disabled: {

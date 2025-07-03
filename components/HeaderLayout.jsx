@@ -43,7 +43,7 @@ export default function HeaderLayout({ data }) {
   return (
     <header
       className={clsx(
-        "sticky top-0 w-screen mb-[5em] grid-cols-18 gap-5 z-50 p-4 font-serif font-sm",
+        "sticky top-0 w-screen grid-cols-18 gap-5 z-50 p-4 font-serif font-sm",
         "flex flex-col md:grid",
       )}
     >
@@ -139,7 +139,7 @@ const Collapsible = ({ title, children, className }) => {
       <div
         className={clsx(
           "relative w-full pt-[1em] bg-white [&>p]:leading-none",
-          "md:absolute md:pt-[6em] md:p-1",
+          "md:absolute md:pt-[6.6em] md:p-1",
         )}
       >
         {children}

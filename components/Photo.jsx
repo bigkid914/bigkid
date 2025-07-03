@@ -61,7 +61,8 @@ export const Photo = ({ data, showAll, previewVisible }) => {
                     {previewVisible && <div className={"relative w-full h-full"}>
                         <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{metadata.extension}</Metadata>
                         <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{formatBytes(metadata.size)}</Metadata>
-                        <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{metadata.dimensions}</Metadata>
+                        <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{data.photographer}</Metadata>
+                        <Metadata containerHeight={containerHeight} containerWidth={containerWidth}>{data.date}</Metadata>
 
                     </div>}
                 </div>

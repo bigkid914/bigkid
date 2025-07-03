@@ -92,7 +92,7 @@ const Video = ({
     >
       <button
         className={
-          "relative w-max max-w-full leading-none text-left link inline-flex text-black hover:text-theme-blue"
+          "relative w-max max-w-full leading-none text-left link inline-flex  hover:text-theme-blue"
         }
         onMouseEnter={handleHoverOn}
         onMouseLeave={handleHoverOff}

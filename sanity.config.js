@@ -9,7 +9,6 @@ import { structureTool } from "sanity/structure";
 
 // Singletons
 import settings from "@/sanity/schemas/singletons/settings";
-import home from "@/sanity/schemas/singletons/home";
 
 // Documents
 import section from "@/sanity/schemas/documents/section";
@@ -24,7 +23,7 @@ import vimeoObject from "@/sanity/schemas/objects/vimeoObject";
 // Blocks
 import basicBlock from "@/sanity/schemas/blocks/basicBlock";
 
-const singletons = new Set([settings, home]);
+const singletons = new Set([settings]);
 const documents = new Set([section, director]);
 const objects = new Set([linkWithSelector, vimeoObject, photoObject]);
 const arrays = new Set([]);
