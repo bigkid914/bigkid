@@ -26,3 +26,5 @@ export const VideoPlayer = forwardRef(({ url, playing = true, loop = true, contr
     />
   ) : null
 })
+
+VideoPlayer.displayName = 'VideoPlayer'
