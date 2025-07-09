@@ -30,6 +30,43 @@ export const directorQuery = groq`
   }
 `;
 
+export const indexQuery = groq`
+  *[_type == "settings"][0]{
+    "sectionOrder": sectionOrder[] -> {
+    projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)]{
+      _type == 'projectObject' => {
+        _key,
+        title,
+        _type,
+        "director": director->name,
+        "credits": credits[],
+        "previewVideo": preview.files[quality match "hls"][0].link,
+        "fullVideo": fullVideo.files[quality match "hls"][0].link,
+        "previewWidth": preview.width,
+        "previewHeight": preview.height,
+        "fullWidth": fullVideo.width,
+        "fullHeight": fullVideo.height,
+        "fullDuration": fullVideo.duration,
+        "size": fullVideo.files[] | order(size desc)[0].size,
+        "date": fullVideo.release_time,
+        "fps": fullVideo.files[quality match "hls"][0].fps
+      },
+      _type == 'photoObject' => {
+        _key,
+        title,
+        _type,
+        photographer,
+        date,
+        photos[] {
+          ${imageFragment}
+        }
+      }
+    },
+
+    }
+  }
+`;
+
 export const pageQuery = groq`
   *[_type == "section" && slug.current == $slug][0]{
     projects[_type == "photoObject" || defined(preview.files[quality match "hls"][0].link) && defined(fullVideo.files[quality match "hls"][0].link)]{
