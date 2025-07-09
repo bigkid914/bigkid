@@ -16,13 +16,13 @@ export const headerQuery = groq`
       name,
       "slug": slug.current
     },
-    "about":*[_type == "home"][0].about[],
+    "about":*[_type == "settings"][0].about[],
     "globalTitle": *[_type == "settings"][0].globalTitle
   }
 `;
 
 export const homePageQuery = groq`
-  *[_type == "home"][0]{
+  *[_type == "settings"][0]{
     _id,
     "sections": sectionOrder[] -> {
       _id,
