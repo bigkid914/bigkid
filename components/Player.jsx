@@ -284,7 +284,6 @@ export const Player = ({ data, isActive, previewVisible }) => {
                     className={"leading-none"}
                   >{`-${new Date(time * 1000).toISOString().slice(11, 19)}`}</div>
                 </div>
-
                 <div className={"leading-none"}>
                   <CustomPortableText value={credits} />
                 </div>
