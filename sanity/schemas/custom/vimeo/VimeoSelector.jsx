@@ -17,6 +17,39 @@ const createUrl = (pathname, params) => {
 
 const validKeys = ["files", "uri", "stats", "name", "width", "height", "link", "duration", "release_time", "pictures"];
 
+const createArrayItemKey = () => Math.random().toString(36).slice(2, 14);
+
+const getVideoPlaybackUrl = (video) => {
+    if (!video || typeof video !== "object") return undefined;
+
+    const files = Array.isArray(video.files) ? video.files : [];
+    const hlsFile = files.find((file) => file?.quality === "hls" && file?.link);
+    if (hlsFile?.link) return hlsFile.link;
+
+    const fallbackFile = files.find((file) => file?.link);
+    if (fallbackFile?.link) return fallbackFile.link;
+
+    if (typeof video.link === "string" && video.link.length > 0) return video.link;
+
+    return undefined;
+};
+
+const normalizeVimeoData = (source) => {
+    const vimeoData = { ...source, _type: "vimeoObject" };
+    Object.keys(vimeoData).forEach((key) => validKeys.includes(key) || key === "_type" || delete vimeoData[key]);
+
+    const files = Array.isArray(vimeoData.files) ? vimeoData.files : [];
+    vimeoData.files = files
+        .filter((file) => file && typeof file === "object")
+        .map((file) => ({
+            ...file,
+            _type: "object",
+            _key: typeof file._key === "string" && file._key.length > 0 ? file._key : createArrayItemKey(),
+        }));
+
+    return vimeoData;
+};
+
 
 export const VimeoSelector = (props) => {
     const documentId = useFormValue(["_id"])
@@ -47,7 +80,7 @@ export const VimeoSelector = (props) => {
         <div className={"font-sans"}>
             {fieldValue ? <div className={"bg-[#101112] p-4 rounded mb-2"}>
                 <div style={{ aspectRatio: `${fieldValue.width}/${fieldValue.height}` }}>
-                    <VideoPlayer url={fieldValue.files.find((file) => file.quality === "hls")?.link} controls={true} playing={false} />
+                    <VideoPlayer url={getVideoPlaybackUrl(fieldValue)} controls={true} playing={false} />
                 </div>
                 <VideoDetails data={fieldValue} />
             </div> : null}
@@ -159,7 +192,7 @@ const Thumbnail = ({ data, documentId, fieldName, fieldValue, client }) => {
                                         </button>
                                     </div>
                                     <div className={"w-[48rem] max-w-full"} style={{ aspectRatio: `${width}/${height}` }}>
-                                        <VideoPlayer url={files.find((file) => file.quality === "hls")?.link} controls={true} autoplay={true} />
+                                        <VideoPlayer url={getVideoPlaybackUrl(data)} controls={true} autoplay={true} />
                                     </div>
                                     <VideoDetails data={data} />
                                     <SelectVideo data={data} documentId={documentId} fieldName={fieldName} fieldValue={fieldValue} client={client} />
@@ -174,7 +207,14 @@ const Thumbnail = ({ data, documentId, fieldName, fieldValue, client }) => {
 }
 
 const VideoDetails = ({ data }) => {
-    const { name, link, duration, release_time, stats } = data;
+    const safeData = data && typeof data === "object" ? data : {};
+    const name = typeof safeData.name === "string" ? safeData.name : "";
+    const link = typeof safeData.link === "string" ? safeData.link : "";
+    const duration = typeof safeData.duration === "number" ? safeData.duration : 0;
+    const releaseTime = safeData.release_time ? new Date(safeData.release_time) : null;
+    const playCount = typeof safeData.stats?.plays === "number" ? safeData.stats.plays : 0;
+    const safeReleaseDate = releaseTime && !Number.isNaN(releaseTime.getTime()) ? releaseTime : new Date(0);
+
     return (
         <div >
             <div className={"flex justify-between gap-2 mt-2"}>
@@ -182,7 +222,7 @@ const VideoDetails = ({ data }) => {
             </div>
             <div className={"flex gap-2 justify-between"}>
                 <p className={"pointer-events-none block text-sm font-medium text-gray-500 !mb-0"}>
-                    {new Date(release_time).toLocaleDateString('en-GB', {
+                    {safeReleaseDate.toLocaleDateString('en-GB', {
                         day: '2-digit',
                         month: 'short',
                         year: 'numeric'
@@ -200,7 +240,7 @@ const VideoDetails = ({ data }) => {
             </div>
             <div className={"flex gap-2 justify-between items-center"}>
                 <p className={"pointer-events-none block text-sm font-medium text-gray-500 !mb-0"}>
-                    {pluralize('plays', stats.plays, true)}
+                    {pluralize('plays', playCount, true)}
                 </p>
                 <div className={"block text-sm font-medium text-gray-500"}>
                     <a href={link} target={"_blank"} rel={"norefferer noopener"} className={"text-gray-500 hover:text-white transition-colors"}><ExternalLink size={18} /></a>
@@ -212,8 +252,7 @@ const VideoDetails = ({ data }) => {
 
 const SelectVideo = ({ data, documentId, fieldName, fieldValue, client }) => {
     const updateSelectedVideo = () => {
-        const vimeoData = { ...data };
-        Object.keys(vimeoData).forEach((key) => validKeys.includes(key) || delete vimeoData[key]);
+        const vimeoData = normalizeVimeoData(data);
         client
             .patch(documentId)
             .set({ [fieldName]: vimeoData })
