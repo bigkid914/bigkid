@@ -6,7 +6,7 @@ import { NotFound } from "@/components/NotFound";
 import { Projects } from "@/components/Projects";
 
 export function generateStaticParams() {
-  return generateStaticSlugs("page");
+  return generateStaticSlugs("section");
 }
 
 export async function generateMetadata({ params }) {
