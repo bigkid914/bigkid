@@ -69,6 +69,10 @@ export default defineType({
               type: "basicBlock",
             }),
             defineField({
+              name: "poster",
+              type: "image",
+            }),
+            defineField({
               name: "preview",
               type: "vimeoObject",
               fieldset: "video",

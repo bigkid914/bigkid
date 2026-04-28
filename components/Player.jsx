@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { stegaClean } from "next-sanity";
 import Slider from "react-input-slider";
+import { Image } from "@/components/Image";
 
 export const Player = ({ data, isActive, previewVisible }) => {
   const {
@@ -20,6 +21,7 @@ export const Player = ({ data, isActive, previewVisible }) => {
     fps,
     director,
     credits,
+    poster,
   } = data;
 
   const [containerWidth, setContainerWidth] = useState(null);
@@ -282,11 +284,25 @@ export const Player = ({ data, isActive, previewVisible }) => {
                     className={"leading-none"}
                   >{`-${new Date(time * 1000).toISOString().slice(11, 19)}`}</div>
                 </div>
-                
-                  <div className={"leading-none"}>
-                    <CustomPortableText value={credits} />
-                  </div>
-                
+
+                <div className={"leading-none"}>
+                  <CustomPortableText value={credits} />
+                </div>
+                <div className={"leading-none mt-4"}>
+                  {poster ? (
+                    <Image
+                      _id={poster._id}
+                      crop={poster.crop}
+                      hotspot={poster.hotspot}
+                      alt={poster.alt || ""}
+                      sizes={
+                        "(max-width: 767px) 100vw, (min-width: 768px) 50vw"
+                      }
+                      width={1500}
+                      className={"object-contain w-full h-auto md:max-w-xl"}
+                    />
+                  ) : null}
+                </div>
               </div>
             )}
           </div>

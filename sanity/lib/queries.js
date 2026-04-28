@@ -40,6 +40,9 @@ export const indexQuery = groq`
         _type,
         "director": director->name,
         "credits": credits[],
+        poster {
+          ${imageFragment}
+        },
         "previewVideo": preview.files[quality match "hls"][0].link,
         "fullVideo": fullVideo.files[quality match "hls"][0].link,
         "previewWidth": preview.width,
@@ -76,6 +79,9 @@ export const pageQuery = groq`
         _type,
         "director": director->name,
         "credits": credits[],
+        poster {
+          ${imageFragment}
+        },
         "previewVideo": preview.files[quality match "hls"][0].link,
         "fullVideo": fullVideo.files[quality match "hls"][0].link,
         "previewWidth": preview.width,
